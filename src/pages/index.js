@@ -1,6 +1,5 @@
 import AppBarComp from "@/components/AppBar";
 import Pdf from "@/components/Pdf";
-import CarTable from "@/components/Table";
 import styles from "@/styles/Home.module.css";
 import { Button, Grid, Stack } from "@mui/material";
 import { useState } from "react";
