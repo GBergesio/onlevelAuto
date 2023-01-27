@@ -19,9 +19,11 @@ export default function Pdf() {
       <Page size="A4" style={styles.page}>
         <View style={styles.section}>
           <Text>Section #1</Text>
+          <Text>Section #2</Text>
         </View>
         <View style={styles.section}>
-          <Text>Section #2</Text>
+          <Text>Section #3</Text>
+          <Text>Section #4</Text>
         </View>
       </Page>
     </Document>
