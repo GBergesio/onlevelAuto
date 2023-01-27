@@ -1,52 +1,43 @@
-import React, { useMemo } from 'react';
-import MaterialReactTable from 'material-react-table';
+import React, { useMemo } from "react";
+import MaterialReactTable from "material-react-table";
 
 //nested data is ok, see accessorKeys in ColumnDef below
 const data = [
   {
     name: {
-      firstName: 'John',
-      lastName: 'Doe',
+      vehiculo: "Ford Fiesta",
+      modelo: "2020",
     },
-    address: '261 Erdman Ford',
-    city: 'East Daphne',
-    state: 'Kentucky',
+    Cilindrada: "2.0",
+    Kilometraje: "165000Kms",
+    Precio: "$2.500.000",
   },
   {
     name: {
-      firstName: 'Jane',
-      lastName: 'Doe',
+      vehiculo: "Honda Civic",
+      modelo: "2017",
     },
-    address: '769 Dominic Grove',
-    city: 'Columbus',
-    state: 'Ohio',
+    Cilindrada: "2.5",
+    Kilometraje: "15000Kms",
+    Precio: "$4.500.000",
   },
   {
     name: {
-      firstName: 'Joe',
-      lastName: 'Doe',
+      vehiculo: "VW Bora",
+      modelo: "2010",
     },
-    address: '566 Brakus Inlet',
-    city: 'South Linda',
-    state: 'West Virginia',
+    Cilindrada: "2.0",
+    Kilometraje: "265000Kms",
+    Precio: "$5.500.000",
   },
   {
     name: {
-      firstName: 'Kevin',
-      lastName: 'Vandy',
+      vehiculo: "Toyota Corolla",
+      modelo: "2022",
     },
-    address: '722 Emie Stream',
-    city: 'Lincoln',
-    state: 'Nebraska',
-  },
-  {
-    name: {
-      firstName: 'Joshua',
-      lastName: 'Rolluffs',
-    },
-    address: '32188 Larkin Turnpike',
-    city: 'Charleston',
-    state: 'South Carolina',
+    Cilindrada: "21.6",
+    Kilometraje: "5000Kms",
+    Precio: "$7.500.000",
   },
 ];
 
@@ -55,27 +46,27 @@ const CarTable = () => {
   const columns = useMemo(
     () => [
       {
-        accessorKey: 'name.firstName', //access nested data with dot notation
-        header: 'First Name',
+        accessorKey: "name.vehiculo", //access nested data with dot notation
+        header: "Vehículo",
       },
       {
-        accessorKey: 'name.lastName',
-        header: 'Last Name',
+        accessorKey: "name.modelo",
+        header: "Modelo",
       },
       {
-        accessorKey: 'address', //normal accessorKey
-        header: 'Address',
+        accessorKey: "Cilindrada", //normal accessorKey
+        header: "Cilindrada",
       },
       {
-        accessorKey: 'city',
-        header: 'City',
+        accessorKey: "Kilometraje",
+        header: "Kilometraje",
       },
       {
-        accessorKey: 'state',
-        header: 'State',
+        accessorKey: "Precio",
+        header: "Precio",
       },
     ],
-    [],
+    []
   );
 
   return <MaterialReactTable columns={columns} data={data} />;
