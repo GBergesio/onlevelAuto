@@ -1,12 +1,18 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
-import styles from '@/styles/Home.module.css'
-import CarTable from '@/components/Table'
+import Head from "next/head";
+import Image from "next/image";
+import { Inter } from "@next/font/google";
+import styles from "@/styles/Home.module.css";
+import CarTable from "@/components/Table";
+// import { PDFViewer } from "@react-18-pdf/renderer";
+// import Pdf from "@/components/PDF/Pdf";
+import { useState } from "react";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+
+  const [open, setOpen] = useState(false);
+
   return (
     <>
       <Head>
@@ -118,8 +124,19 @@ export default function Home() {
             </p>
           </a>
         </div> */}
-        <CarTable/>
+{/* 
+        <div className="">
+          {open ? (
+            <PDFViewer style={{ width: "100%", height: "90vh" }}>
+              <Pdf  />
+            </PDFViewer>
+          ) : (
+            <CarTable />
+          )}
+        </div> */}
+        <p>hola</p>
+        <CarTable />
       </main>
     </>
-  )
+  );
 }
