@@ -6,11 +6,11 @@ import CarTable from "@/components/Table";
 // import { PDFViewer } from "@react-18-pdf/renderer";
 // import Pdf from "@/components/PDF/Pdf";
 import { useState } from "react";
+import { Document, Page, PDFViewer, Text } from "@react-pdf/renderer";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-
   const [open, setOpen] = useState(false);
 
   return (
@@ -124,7 +124,7 @@ export default function Home() {
             </p>
           </a>
         </div> */}
-{/* 
+        {/* 
         <div className="">
           {open ? (
             <PDFViewer style={{ width: "100%", height: "90vh" }}>
@@ -134,8 +134,17 @@ export default function Home() {
             <CarTable />
           )}
         </div> */}
-        <p>hola</p>
-        <CarTable />
+        {/* <p>hola</p>
+        <CarTable /> */}
+        <div>
+          <PDFViewer>
+            <Document>
+              <Page>
+                <Text>Hola</Text>
+              </Page>
+            </Document>
+          </PDFViewer>
+        </div>
       </main>
     </>
   );
