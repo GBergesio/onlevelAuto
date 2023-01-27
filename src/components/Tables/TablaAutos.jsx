@@ -3,9 +3,10 @@ import MaterialReactTable from "material-react-table";
 import { Delete, Edit, PictureAsPdf } from "@mui/icons-material";
 import { Box, Button, IconButton, Tooltip } from "@mui/material";
 import CreateModal from "../Modales/CreateModal";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import Pdf from "../Pdf";
 
-export default function TablaAutos({ columns, data }) {
-
+export default function TablaAutos({ columns, data, makePDF }) {
   const [createModalOpen, setCreateModalOpen] = useState(false);
 
   return (
@@ -22,10 +23,18 @@ export default function TablaAutos({ columns, data }) {
         renderRowActions={({ row, table }) => (
           <Box sx={{ display: "flex", gap: "0.1rem" }}>
             <Tooltip arrow placement="left" title="PDF">
-              <IconButton onClick={() => setOpenPDF(true)}>
+              <IconButton
+                onClick={() => {
+                  // setOpenPDF(true)
+                  makePDF(row);
+                }}
+              >
                 <PictureAsPdf />
               </IconButton>
             </Tooltip>
+            {/* <PDFDownloadLink document={<Pdf/>} fileName="OnLevelPDF">
+            </PDFDownloadLink> */}
+            {/* <Button>Descargar PDF</Button> */}
             <Tooltip arrow placement="left" title="Edit">
               <IconButton onClick={() => table.setEditingRow(row)}>
                 <Edit />
@@ -44,7 +53,7 @@ export default function TablaAutos({ columns, data }) {
             onClick={() => setCreateModalOpen(true)}
             variant="contained"
             size="smaill"
-            sx={{ mt: 7}}
+            sx={{ mt: 7 }}
           >
             Crear nuevo vehículo
           </Button>

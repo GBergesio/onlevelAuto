@@ -1,11 +1,24 @@
 import AppBarComp from "@/components/AppBar";
 import TablaAutos from "@/components/Tables/TablaAutos";
-import { Button, Grid } from "@mui/material";
-import React from "react";
+import { Button, Grid, Typography } from "@mui/material";
+import React, { useState } from "react";
 import Columns from "@/components/Tables/Columns/CarColumns";
+import Pdf from "@/components/Pdf";
+import { PDFDownloadLink } from "@react-pdf/renderer";
 
 export default function index() {
   const { columns } = Columns();
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const [openPDF, setOpenPDF] = useState(false);
+   // eslint-disable-next-line react-hooks/rules-of-hooks
+  const [dataAuto, setDataAuto] = useState([])
+
+  function makePDF(data) {
+    setOpenPDF(true);
+    setDataAuto(data.original)
+    console.log("gatito", data.original);
+  }
 
   const data = [
     {
@@ -49,19 +62,25 @@ export default function index() {
   return (
     <Grid>
       <AppBarComp />
-      {/* <Grid item xs={12} sx={{ mt: 10, mb: 3 }}>
-        <Button
-          color="secondary"
-          onClick={() => setCreateModalOpen(true)}
-          variant="contained"
-          size="smaill"
-        >
-          Crear nuevo vehículo
-        </Button>
-      </Grid> */}
-      <Grid item xs={12}>
-        <TablaAutos columns={columns} data={data} />
-      </Grid>
+      {openPDF === true ? (
+        <>
+          <Grid item xs={12} sx={{ mt: 15 }}>
+            <PDFDownloadLink document={<Pdf dataAuto={dataAuto}/>} fileName="OnLevelPDF">
+              <Button>Descargar PDF</Button>
+            </PDFDownloadLink>
+          </Grid>
+          <Grid item xs={12} sx={{ mt: 15 }}>
+            <Pdf dataAuto={dataAuto}/>
+          </Grid>
+        </>
+      ) : (
+        <>
+          {" "}
+          <Grid item xs={12}>
+            <TablaAutos columns={columns} data={data} makePDF={makePDF}/>
+          </Grid>
+        </>
+      )}
     </Grid>
   );
 }

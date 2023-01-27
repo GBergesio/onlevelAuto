@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 
 function Home() {
   const [open, setOpen] = useState(false);
+  
   const router = useRouter();
 
   const goTo = (site) => {
