@@ -31,7 +31,7 @@ export default function Pdf({ dataAuto }) {
           <Text>Modelo: {dataAuto.name.modelo}</Text>
         </View>
         <View style={styles.section}>
-          <Text>Precio: {dataAuto.Precio}</Text>
+          <Text>Precioss: {dataAuto.Precio}</Text>
         </View>
       </Page>
     </Document>
