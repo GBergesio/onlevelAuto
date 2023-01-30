@@ -6,7 +6,13 @@ import Columns from "@/components/Tables/Columns/CarColumns";
 import Pdf from "@/components/Pdf";
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 
-export default function index() {
+import firebaseApp from '../../../firebase'
+import { getFirestore, collection, addDoc, getDocs, doc, deleteDoc, getDoc, setDoc } from 'firebase/firestore'
+
+const db = getFirestore(firebaseApp)
+
+
+export default function index({autos}) {
   const { columns } = Columns();
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -19,45 +25,6 @@ export default function index() {
     setDataAuto(data.original)
     console.log("gatito", data.original);
   }
-
-  const data = [
-    {
-      name: {
-        vehiculo: "BMW X6",
-        modelo: "2020",
-      },
-      Cilindrada: "4.0",
-      Kilometraje: "5400Kms",
-      Precio: "$25.000 USD",
-    },
-    {
-      name: {
-        vehiculo: "Honda Civic",
-        modelo: "2017",
-      },
-      Cilindrada: "2.5",
-      Kilometraje: "15000Kms",
-      Precio: "$4.500.000",
-    },
-    {
-      name: {
-        vehiculo: "VW Bora",
-        modelo: "2010",
-      },
-      Cilindrada: "2.0",
-      Kilometraje: "265000Kms",
-      Precio: "$5.500.000",
-    },
-    {
-      name: {
-        vehiculo: "Toyota Corolla",
-        modelo: "2022",
-      },
-      Cilindrada: "21.6",
-      Kilometraje: "5000Kms",
-      Precio: "$7.500.000",
-    },
-  ];
 
   return (
     <Grid>
@@ -80,10 +47,26 @@ export default function index() {
         <>
           {" "}
           <Grid item xs={12}>
-            <TablaAutos columns={columns} data={data} makePDF={makePDF}/>
+            <TablaAutos columns={columns} data={autos} makePDF={makePDF}/>
           </Grid>
         </>
       )}
     </Grid>
   );
+}
+
+export const getServerSideProps = async (context) => {
+  const querySnapshotTwo = await getDocs(collection(db, 'Vehiculo'))
+
+  const Vehiculo = []
+
+  querySnapshotTwo.forEach((doc) => {
+    Vehiculo.push({ ...doc.data(), id: doc.id })
+  })
+
+  return {
+    props: {
+      autos: Vehiculo,
+    }
+  }
 }

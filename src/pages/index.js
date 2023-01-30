@@ -48,9 +48,6 @@ function Home() {
           </Grid>
         </Grid>
       </div>
-
-      {/* <div>{open === false ? <CarTable /> : <Pdf />}</div> */}
-      {/* <Button onClick={() => setOpen(true)}>Click me</Button> */}
     </>
   );
 }

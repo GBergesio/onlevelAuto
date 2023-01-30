@@ -5,7 +5,6 @@ import {
   Text,
   View,
   StyleSheet,
-  PDFViewer,
   Image,
 } from "@react-pdf/renderer";
 
@@ -69,7 +68,6 @@ export default function Pdf({ dataAuto }) {
     bodySection: {
       display: "flex",
       flexDirection: "column",
-      // alignSelf: "center",
       marginTop: "20px",
       marginLeft: "25px",
     },
@@ -138,8 +136,10 @@ export default function Pdf({ dataAuto }) {
         </View>
         <View style={styles.firstInfo}>
           <View style={{ gap: "25px" }}>
-            <Text style={styles.titulo}>{dataAuto.name.vehiculo}</Text>
-            <Text style={styles.subtitulo}>Deportivo</Text>
+            <Text style={styles.titulo}>
+              {dataAuto.marca + " " + dataAuto.version}
+            </Text>
+            <Text style={styles.subtitulo}>{dataAuto.tipo}</Text>
           </View>
           <View
             style={{
@@ -179,7 +179,7 @@ export default function Pdf({ dataAuto }) {
                   fontSize: "13px",
                 }}
               >
-                USD 5.500
+                {dataAuto.precio}
               </Text>
             </View>
           </View>
@@ -222,20 +222,32 @@ export default function Pdf({ dataAuto }) {
             <View
               style={{ display: "flex", flexDirection: "column", width: "27%" }}
             >
-              <Text style={styles.textoCategorias}>Marca: BMW</Text>
-              <Text style={styles.textoCategorias}>Modelo: X6</Text>
-              <Text style={styles.textoCategorias}>Año: 2020</Text>
-              <Text style={styles.textoCategorias}>Versión: xDrive 40iA</Text>
+              <Text style={styles.textoCategorias}>
+                Marca: {dataAuto.marca}
+              </Text>
+              <Text style={styles.textoCategorias}>
+                Modelo: {dataAuto.modelo}
+              </Text>
+              <Text style={styles.textoCategorias}>Año: {dataAuto.año}</Text>
+              <Text style={styles.textoCategorias}>
+                Versión: {dataAuto.version}
+              </Text>
             </View>
             <View
               style={{ display: "flex", flexDirection: "column", width: "28%" }}
             >
-              <Text style={styles.textoCategorias}>Kilometraje: 10000</Text>
               <Text style={styles.textoCategorias}>
-                Transmisión: Automática
+                Kilometraje: {dataAuto.kilometraje}
               </Text>
-              <Text style={styles.textoCategorias}>Puertas: 5</Text>
-              <Text style={styles.textoCategorias}>Motor: 4.0</Text>
+              <Text style={styles.textoCategorias}>
+                Transmisión: {dataAuto.transmision}
+              </Text>
+              <Text style={styles.textoCategorias}>
+                Puertas: {dataAuto.puertas}
+              </Text>
+              <Text style={styles.textoCategorias}>
+                Motor: {dataAuto.motor}
+              </Text>
             </View>
             <View
               style={{
@@ -246,12 +258,14 @@ export default function Pdf({ dataAuto }) {
               }}
             >
               <Text style={styles.textoCategorias}>
-                Tipo de combustible: Nafta
+                Tipo de combustible: {dataAuto.tipoCombustible}
               </Text>
-              <Text style={styles.textoCategorias}>Acepta permuta: Si</Text>
-              <Text style={styles.textoCategorias}>HP: 2000</Text>
               <Text style={styles.textoCategorias}>
-                Ubicación: Puerto Madero, Av. Colon 1555
+                Acepta permuta: {dataAuto.permuta}
+              </Text>
+              <Text style={styles.textoCategorias}>HP: {dataAuto.HP}</Text>
+              <Text style={styles.textoCategorias}>
+                Ubicación: {dataAuto.ubicacion}
               </Text>
             </View>
           </View>
@@ -276,39 +290,79 @@ export default function Pdf({ dataAuto }) {
                 borderBottom: "1px solid #000000",
               }}
             ></View>
-            <Text style={styles.textoCategorias}>
-              Escape Akrapovic, Tratamiento cerámica
-            </Text>
+            <Text style={styles.textoCategorias}>{dataAuto.adicionales}</Text>
           </View>
         </View>
       </Page>
       <Page size="A4" style={styles.page}>
-        {/* <View
-          style={{ backgroundColor: "yellow", height: "200px", width: "100%" }}
-        ></View> */}
+        <View style={{ marginLeft: "25px", marginTop: "22px" }}>
+          <Text
+            style={{
+              fontSize: "15px",
+              fontWeight: "bold",
+              paddingBottom: "10px",
+            }}
+          >
+            FOTOS
+          </Text>
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              marginBottom: "10px",
+              width: "95%",
+              borderBottom: "1px solid #000000",
+            }}
+          ></View>
+        </View>
         <View style={styles.imageSecSection}>
-          <View style={{ display: "flex", flexDirection: "column" }}>
+          <View
+            style={{ display: "flex", flexDirection: "column", padding: "5px" }}
+          >
             <Image
-              style={{ width: "250px" }}
-              alt="bmw"
+              style={{ width: "250px", paddingBottom: "5px" }}
+              alt="img1"
               src="https://1.bp.blogspot.com/-T5WCgYeOeqQ/YJ20y2trA2I/AAAAAAAAlHM/dg-DALt1emAlBiVe8x92hNLkKwDkwE5EwCLcBGAsYHQ/s16000/BMW-X6-M-Argentina.jpg"
             />
             <Image
-              style={{ width: "250px" }}
-              alt="bmw"
+              style={{ width: "250px", paddingBottom: "5px" }}
+              alt="img2"
               src="https://fotos.jornaldocarro.estadao.com.br/uploads/2019/07/08131347/1a198549-2020-bmw-x6-28.jpg"
             />
-          </View>
-          <View style={{ display: "flex", flexDirection: "column" }}>
             <Image
-              style={{ width: "250px" }}
-              alt="bmw"
-              src="https://images.prismic.io/carwow/82a55b75-7a7a-4230-9635-d43b9c75a46f_P90390472_highRes_the-new-bmw-x6-xdriv.jpg"
+              style={{ width: "250px", paddingBottom: "5px" }}
+              alt="img3"
+              src="https://1.bp.blogspot.com/-T5WCgYeOeqQ/YJ20y2trA2I/AAAAAAAAlHM/dg-DALt1emAlBiVe8x92hNLkKwDkwE5EwCLcBGAsYHQ/s16000/BMW-X6-M-Argentina.jpg"
             />
             <Image
-              style={{ width: "250px" }}
-              alt="bmw"
-              src="https://images.prismic.io/carwow/82a55b75-7a7a-4230-9635-d43b9c75a46f_P90390472_highRes_the-new-bmw-x6-xdriv.jpg"
+              style={{ width: "250px", paddingBottom: "5px" }}
+              alt="img4"
+              src="https://1.bp.blogspot.com/-T5WCgYeOeqQ/YJ20y2trA2I/AAAAAAAAlHM/dg-DALt1emAlBiVe8x92hNLkKwDkwE5EwCLcBGAsYHQ/s16000/BMW-X6-M-Argentina.jpg"
+            />
+          </View>
+          <View
+            style={{ display: "flex", flexDirection: "column", padding: "5px" }}
+          >
+            <Image
+              style={{ width: "250px", paddingBottom: "5px" }}
+              alt="img5"
+              src="https://1.bp.blogspot.com/-T5WCgYeOeqQ/YJ20y2trA2I/AAAAAAAAlHM/dg-DALt1emAlBiVe8x92hNLkKwDkwE5EwCLcBGAsYHQ/s16000/BMW-X6-M-Argentina.jpg"
+            />
+            <Image
+              style={{ width: "250px", paddingBottom: "5px" }}
+              alt="img6"
+              src="https://fotos.jornaldocarro.estadao.com.br/uploads/2019/07/08131347/1a198549-2020-bmw-x6-28.jpg"
+            />
+            <Image
+              style={{ width: "250px", paddingBottom: "5px" }}
+              alt="img7"
+              src="https://1.bp.blogspot.com/-T5WCgYeOeqQ/YJ20y2trA2I/AAAAAAAAlHM/dg-DALt1emAlBiVe8x92hNLkKwDkwE5EwCLcBGAsYHQ/s16000/BMW-X6-M-Argentina.jpg"
+            />
+            <Image
+              style={{ width: "250px", paddingBottom: "5px" }}
+              alt="img8"
+              src="https://1.bp.blogspot.com/-T5WCgYeOeqQ/YJ20y2trA2I/AAAAAAAAlHM/dg-DALt1emAlBiVe8x92hNLkKwDkwE5EwCLcBGAsYHQ/s16000/BMW-X6-M-Argentina.jpg"
             />
           </View>
         </View>

@@ -3,7 +3,7 @@ import { useMemo } from "react";
 export default function Columns() {
   const columns = useMemo(() => [
     {
-      accessorKey: "name.vehiculo", //access nested data with dot notation
+      accessorFn: (row) => row.marca + " " + row.modelo + " - " + row.año,
       header: "Vehículo",
       muiTableHeadCellProps: {
         align: "center",
@@ -16,8 +16,8 @@ export default function Columns() {
       enableColumnActions: false,
     },
     {
-      accessorKey: "name.modelo", //access nested data with dot notation
-      header: "Modelo",
+      accessorKey: "precio",
+      header: "Precio",
       muiTableHeadCellProps: {
         align: "center",
       },
@@ -32,29 +32,3 @@ export default function Columns() {
 
   return { columns };
 }
-
-// const columns = useMemo(
-//   () => [
-//     {
-//       accessorKey: "name.vehiculo", //access nested data with dot notation
-//       header: "Vehículo",
-//     },
-//     {
-//       accessorKey: "name.modelo",
-//       header: "Modelo",
-//     },
-//     {
-//       accessorKey: "Cilindrada", //normal accessorKey
-//       header: "Cilindrada",
-//     },
-//     {
-//       accessorKey: "Kilometraje",
-//       header: "Kilometraje",
-//     },
-//     {
-//       accessorKey: "Precio",
-//       header: "Precio",
-//     },
-//   ],
-//   []
-// );
