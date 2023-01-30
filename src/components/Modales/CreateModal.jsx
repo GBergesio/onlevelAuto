@@ -1,22 +1,14 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from "@mui/material";
+import { Dialog, DialogContent, DialogTitle } from "@mui/material";
 import React from "react";
 import CarForm from "../Forms/CarForm";
 
-export default function CreateModal({ open, columns, onClose, onSubmit }) {
+export default function CreateModal({setOpen, open, columns, onClose, onSubmit,refreshData, setMessage }) {
   return (
     <Dialog open={open}>
-      <DialogTitle textAlign="center">Crear nuevo vehículo</DialogTitle>
+      <DialogTitle textAlign="center">Nuevo vehículo</DialogTitle>
       <DialogContent>
-        <CarForm/>
+        <CarForm onClose={onClose} refreshData={refreshData} setOpen={setOpen} setMessage={setMessage}/>
       </DialogContent>
-      <DialogActions sx={{ p: "1.25rem" }}>
-        <Button onClick={onClose}>Cancelar</Button>
-        <Button color="secondary"  variant="contained">
-          Crear
-        </Button>
-      </DialogActions>
     </Dialog>
   );
 }
-
-// onClick={handleSubmit}

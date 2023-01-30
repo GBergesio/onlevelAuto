@@ -1,13 +1,42 @@
 import React, { useState } from "react";
 import MaterialReactTable from "material-react-table";
-import { Delete, Edit, PictureAsPdf } from "@mui/icons-material";
-import { Box, Button, IconButton, Tooltip } from "@mui/material";
+import { Delete, DoorBack, Edit, PictureAsPdf } from "@mui/icons-material";
+import { Box, Button, IconButton, Snackbar, Tooltip } from "@mui/material";
 import CreateModal from "../Modales/CreateModal";
+import { MRT_Localization_ES } from "material-react-table/locales/es";
+
+import firebaseApp from "../../../firebase";
+import { getFirestore, doc, deleteDoc } from "firebase/firestore";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import Pdf from "../Pdf";
 
-export default function TablaAutos({ columns, data, makePDF }) {
+const db = getFirestore(firebaseApp);
+
+export default function TablaAutos({
+  columns,
+  data,
+  refreshData,
+}) {
   const [createModalOpen, setCreateModalOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const handleDeleteRow = async (row) => {
+    await deleteDoc(doc(db, "Vehiculo", row.original.id));
+    setOpen(true);
+    setMessage("Eliminado, refrescando página");
+    setTimeout(() => {
+      window.location.reload(false);
+    }, 1000);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   return (
     <>
@@ -18,29 +47,30 @@ export default function TablaAutos({ columns, data, makePDF }) {
         enableRowActions
         editingMode="modal"
         enableEditing
-        // onEditingRowSave={handleSaveRowEdits}
-        // onEditingRowCancel={handleCancelRowEdits}
+        localization={MRT_Localization_ES}
         renderRowActions={({ row, table }) => (
           <Box sx={{ display: "flex", gap: "0.1rem" }}>
-            <Tooltip arrow placement="left" title="PDF">
+            {/* <Tooltip arrow placement="left" title="PDF">
               <IconButton
                 onClick={() => {
-                  // setOpenPDF(true)
                   makePDF(row);
                 }}
               >
                 <PictureAsPdf />
               </IconButton>
-            </Tooltip>
-            {/* <PDFDownloadLink document={<Pdf/>} fileName="OnLevelPDF">
-            </PDFDownloadLink> */}
-            {/* <Button>Descargar PDF</Button> */}
-            <Tooltip arrow placement="left" title="Edit">
+            </Tooltip> */}
+            <PDFDownloadLink
+              document={<Pdf dataAuto={row.original} />}
+              fileName="OnLevelPDF"
+            >
+              <Button>Descargar PDF</Button>
+            </PDFDownloadLink>
+            <Tooltip arrow placement="left" title="Editar">
               <IconButton onClick={() => table.setEditingRow(row)}>
                 <Edit />
               </IconButton>
             </Tooltip>
-            <Tooltip arrow placement="right" title="Delete">
+            <Tooltip arrow placement="right" title="Eliminar">
               <IconButton color="error" onClick={() => handleDeleteRow(row)}>
                 <Delete />
               </IconButton>
@@ -49,21 +79,28 @@ export default function TablaAutos({ columns, data, makePDF }) {
         )}
         renderTopToolbarCustomActions={() => (
           <Button
-            color="secondary"
             onClick={() => setCreateModalOpen(true)}
             variant="contained"
             size="smaill"
-            sx={{ mt: 7 }}
+            sx={{ mt: 7, backgroundColor: "#158E5E", fontWeight: "bold" }}
           >
-            Crear nuevo vehículo
+            Nuevo vehículo
           </Button>
         )}
       />
       <CreateModal
-        // columns={columns}
         open={createModalOpen}
+        setOpen={setOpen}
+        setMessage={setMessage}
+        refreshData={refreshData}
         onClose={() => setCreateModalOpen(false)}
-        // onSubmit={handleCreateNewRow}
+      />
+      <Snackbar
+        open={open}
+        autoHideDuration={1000}
+        onClose={handleClose}
+        message={message}
+        severity="success"
       />
     </>
   );

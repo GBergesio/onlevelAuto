@@ -22,3 +22,22 @@ const firebaseApp = initializeApp(firebaseConfig);
 
 export default firebaseApp
 
+
+
+// const functions = require('firebase-functions');
+// const admin = require('firebase-admin');
+// admin.initializeApp();
+
+// exports.exampleFunction = functions.https.onRequest((request, response) => {
+//    // Authenticate with the Firebase service account key
+//    const serviceAccount = require("./path/to/serviceAccountKey.json");
+//    admin.initializeApp({
+//      credential: admin.credential.cert(serviceAccount),
+//      databaseURL: "https://<DATABASE_NAME>.firebaseio.com"
+//    });
+
+//    // Your function logic goes here
+//    // ...
+
+//    response.send("Hello from Firebase!");
+// });

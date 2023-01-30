@@ -4,10 +4,11 @@ import styles from "@/styles/Home.module.css";
 import { Button, Grid, Stack } from "@mui/material";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import CreateModal from "@/components/Modales/CreateModal";
 
 function Home() {
-  const [open, setOpen] = useState(false);
-  
+  const [createModalOpen, setCreateModalOpen] = useState(false);
+
   const router = useRouter();
 
   const goTo = (site) => {
@@ -28,8 +29,11 @@ function Home() {
           <Grid item xs={12}>
             <Button
               variant="contained"
-              sx={{ mt: 10 }}
-              color="info"
+              sx={{
+                mt: 15,
+                backgroundColor: "#d5c6b0",
+                fontWeight: "600",
+              }}
               size="large"
               onClick={() => goTo("/autos")}
             >
@@ -39,8 +43,8 @@ function Home() {
           <Grid item xs={12}>
             <Button
               variant="contained"
-              sx={{ mt: 10 }}
-              color="success"
+              sx={{ mt: 10,backgroundColor: "#158E5E",fontWeight: "600", }}
+              onClick={() => setCreateModalOpen(true)} 
               size="large"
             >
               Crear nuevo auto
@@ -48,6 +52,10 @@ function Home() {
           </Grid>
         </Grid>
       </div>
+      <CreateModal
+        open={createModalOpen}
+        onClose={() => setCreateModalOpen(false)}
+      />
     </>
   );
 }
