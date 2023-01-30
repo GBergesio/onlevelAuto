@@ -4,7 +4,7 @@ import { Button, Grid, Typography } from "@mui/material";
 import React, { useState } from "react";
 import Columns from "@/components/Tables/Columns/CarColumns";
 import Pdf from "@/components/Pdf";
-import { PDFDownloadLink } from "@react-pdf/renderer";
+import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 
 export default function index() {
   const { columns } = Columns();
@@ -23,12 +23,12 @@ export default function index() {
   const data = [
     {
       name: {
-        vehiculo: "Ford Fiesta",
+        vehiculo: "BMW X6",
         modelo: "2020",
       },
-      Cilindrada: "2.0",
-      Kilometraje: "165000Kms",
-      Precio: "$2.500.000",
+      Cilindrada: "4.0",
+      Kilometraje: "5400Kms",
+      Precio: "$25.000 USD",
     },
     {
       name: {
@@ -70,7 +70,10 @@ export default function index() {
             </PDFDownloadLink>
           </Grid>
           <Grid item xs={12} sx={{ mt: 15 }}>
+            <PDFViewer style={{ width: "100%", height: "60vh" }}>
+
             <Pdf dataAuto={dataAuto}/>
+            </PDFViewer>
           </Grid>
         </>
       ) : (
