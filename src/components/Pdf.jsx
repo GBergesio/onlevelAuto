@@ -137,7 +137,7 @@ export default function Pdf({ dataAuto }) {
         <View style={styles.firstInfo}>
           <View style={{ gap: "25px" }}>
             <Text style={styles.titulo}>
-              {dataAuto.marca + " " + dataAuto.version}
+              {dataAuto.marca} {dataAuto.modelo} - {dataAuto.version} 
             </Text>
             <Text style={styles.subtitulo}>{dataAuto.tipo}</Text>
           </View>
