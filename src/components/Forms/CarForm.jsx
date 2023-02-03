@@ -1,11 +1,18 @@
 import { Button, Grid, TextField } from "@mui/material";
 import firebaseApp from "../../../firebase";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { getFirestore, collection, addDoc, } from "firebase/firestore";
 import React, { useState } from "react";
+import { uploadFile } from "firestoredos";
+import { uploadArrayFiles } from "firestoredos";
 
 const db = getFirestore(firebaseApp);
 
-export default function CarForm({ onClose, refreshData, setOpen,setMessage }) {
+export default function CarForm({ onClose, refreshData, setOpen, setMessage }) {
+
+  const [urls, setURLS] = useState([])
+
+  let arrayStringURL = []
+
   const valorInicial = {
     marca: "",
     modelo: "",
@@ -21,21 +28,63 @@ export default function CarForm({ onClose, refreshData, setOpen,setMessage }) {
     HP: "",
     ubicacion: "",
     adicionales: "",
+    imagenes: arrayStringURL
   };
 
+  // Para setear los datos que se van a mandar al form
   const [dato, setDato] = useState(valorInicial);
-
+  // Para obtener el valor de los inputs
   const obtenerInputs = (e) => {
     const { name, value } = e.target;
     setDato({ ...dato, [name]: value });
   };
 
+  let arrayFiles = []
+
+  const handleImagenes = (e) => {
+
+    for (let file of e) {
+      arrayFiles.push(file)
+    }
+
+  }
+
+
   const enviarInfo = async (e) => {
     e.preventDefault();
-    console.log(dato);
+
     try {
+      for (let file of arrayFiles) {
+        const result = await uploadFile(file)
+        arrayStringURL.push(result)
+      }
+      setURLS(arrayStringURL)
+      // console.log("arrayStringURL dentro del try", arrayStringURL)
+      // console.log("urls dentro del try", urls)
+    } catch (error) {
+      console.error(error)
+    }
+
+    try {
+      // await addDoc(collection(db, "Vehiculo"), {
+      //   ...dato,
+      // });
       await addDoc(collection(db, "Vehiculo"), {
-        ...dato,
+        marca: dato.marca,
+        modelo: dato.modelo,
+        version: dato.version,
+        precio: dato.precio,
+        año: dato.año,
+        kilometraje: dato.kilometraje,
+        transmision: dato.transmision,
+        puertas: dato.puertas,
+        motor: dato.motor,
+        tipoCombustible: dato.tipoCombustible,
+        permuta: dato.permuta,
+        HP: dato.HP,
+        ubicacion: dato.ubicacion,
+        adicionales: dato.adicionales,
+        imagenes: arrayStringURL
       });
     } catch (error) {
       console.log(error);
@@ -44,10 +93,12 @@ export default function CarForm({ onClose, refreshData, setOpen,setMessage }) {
     refreshData();
     setOpen(true);
     setMessage("Creado, refrescando página")
-    setTimeout(() => {
-      window.location.reload(false);
-    }, 1000);
+    // setTimeout(() => {
+    //   window.location.reload(false);
+    // }, 1000);
   };
+
+  // console.log("valorInicial", valorInicial)
 
   return (
     <Grid component="form" noValidate onSubmit={enviarInfo}>
@@ -247,6 +298,9 @@ export default function CarForm({ onClose, refreshData, setOpen,setMessage }) {
             required
             sx={{ paddingBottom: "8px" }}
           />
+        </Grid>
+        <Grid item xs={12}>
+          <input type="file" name="imagenes" id="imagenes" multiple onChange={(e) => handleImagenes(e.target.files)} />
         </Grid>
       </Grid>
       <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end" }}>

@@ -137,7 +137,7 @@ export default function Pdf({ dataAuto }) {
         <View style={styles.firstInfo}>
           <View style={{ gap: "25px" }}>
             <Text style={styles.titulo}>
-              {dataAuto.marca} {dataAuto.modelo} - {dataAuto.version} 
+              {dataAuto.marca} {dataAuto.modelo} - {dataAuto.version}
             </Text>
             <Text style={styles.subtitulo}>{dataAuto.tipo}</Text>
           </View>
@@ -323,12 +323,15 @@ export default function Pdf({ dataAuto }) {
             <Image
               style={{ width: "250px", paddingBottom: "5px" }}
               alt="img1"
-              src="https://1.bp.blogspot.com/-T5WCgYeOeqQ/YJ20y2trA2I/AAAAAAAAlHM/dg-DALt1emAlBiVe8x92hNLkKwDkwE5EwCLcBGAsYHQ/s16000/BMW-X6-M-Argentina.jpg"
+              // src="https://1.bp.blogspot.com/-T5WCgYeOeqQ/YJ20y2trA2I/AAAAAAAAlHM/dg-DALt1emAlBiVe8x92hNLkKwDkwE5EwCLcBGAsYHQ/s16000/BMW-X6-M-Argentina.jpg"
+              src="https://firebasestorage.googleapis.com/v0/b/onlevelcars.appspot.com/o/a3440891-9eaf-471a-8eb3-c54ff729c95e?alt=media&token=7f2e7f97-700e-4504-aa83-6a7eed5be6ff"
+            // src={dataAuto.imagenes[0]}
             />
-            <Image
+            {/* <Image
               style={{ width: "250px", paddingBottom: "5px" }}
               alt="img2"
               src="https://fotos.jornaldocarro.estadao.com.br/uploads/2019/07/08131347/1a198549-2020-bmw-x6-28.jpg"
+            // src={dataAuto.imagenes[1]}
             />
             <Image
               style={{ width: "250px", paddingBottom: "5px" }}
@@ -339,9 +342,9 @@ export default function Pdf({ dataAuto }) {
               style={{ width: "250px", paddingBottom: "5px" }}
               alt="img4"
               src="https://1.bp.blogspot.com/-T5WCgYeOeqQ/YJ20y2trA2I/AAAAAAAAlHM/dg-DALt1emAlBiVe8x92hNLkKwDkwE5EwCLcBGAsYHQ/s16000/BMW-X6-M-Argentina.jpg"
-            />
+            /> */}
           </View>
-          <View
+          {/* <View
             style={{ display: "flex", flexDirection: "column", padding: "5px" }}
           >
             <Image
@@ -364,44 +367,9 @@ export default function Pdf({ dataAuto }) {
               alt="img8"
               src="https://1.bp.blogspot.com/-T5WCgYeOeqQ/YJ20y2trA2I/AAAAAAAAlHM/dg-DALt1emAlBiVe8x92hNLkKwDkwE5EwCLcBGAsYHQ/s16000/BMW-X6-M-Argentina.jpg"
             />
-          </View>
+          </View> */}
         </View>
       </Page>
     </Document>
   );
-}
-
-{
-  /* <View style={styles.section}>
-          <Text>Auto: {dataAuto.name.vehiculo}</Text>
-        </View>
-        <View style={styles.section}>
-          <Text>Modelo: {dataAuto.name.modelo}</Text>
-        </View>
-        <View style={styles.section}>
-          <Text>Precioss: {dataAuto.Precio}</Text>
-        </View> */
-}
-
-{
-  /* <View
-style={{
-  display: "flex",
-  flexDirection: "column",
-  width: "100%",
-  margin: "2px",
-}}
->
-<View
-  style={{
-    display: "flex",
-    flexDirection: "row",
-    margin: "4px",
-    justifyContent: "space-between",
-  }}
->
-  <Text style={{ fontSize: 18, paddingBottom: "4px" }}>Logo </Text>
-  <Text style={{ fontSize: 18, paddingBottom: "4px" }}>Algo</Text>
-</View>
-</View> */
 }

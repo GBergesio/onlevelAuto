@@ -25,9 +25,9 @@ export default function TablaAutos({
     await deleteDoc(doc(db, "Vehiculo", row.original.id));
     setOpen(true);
     setMessage("Eliminado, refrescando página");
-    setTimeout(() => {
-      window.location.reload(false);
-    }, 1000);
+    // setTimeout(() => {
+    //   window.location.reload(false);
+    // }, 1000);
   };
 
   const handleClose = (event, reason) => {

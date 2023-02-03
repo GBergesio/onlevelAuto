@@ -7,6 +7,7 @@ import Columns from "@/components/Tables/Columns/CarColumns";
 import Pdf from "@/components/Pdf";
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 
+
 import firebaseApp from "../../../firebase";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 
@@ -87,6 +88,7 @@ export default function index({ autos }) {
           </Grid>
         </>
       )}
+      {/* <img src="https://firebasestorage.googleapis.com/v0/b/onlevelcars.appspot.com/o/a3440891-9eaf-471a-8eb3-c54ff729c95e?alt=media&token=8f8fb79e-3f3b-40f4-9cdf-1b96c5ed5bdb" /> */}
     </Grid>
   );
 }
