@@ -1,19 +1,18 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import AppBarComp from "@/components/AppBar";
 import TablaAutos from "@/components/Tables/TablaAutos";
-import { Button, Grid } from "@mui/material";
+import { Button, Grid, Stack, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Columns from "@/components/Tables/Columns/CarColumns";
 import Pdf from "@/components/Pdf";
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
-
 
 import firebaseApp from "../../../firebase";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 
 const db = getFirestore(firebaseApp);
 
-export default function index({ autos }) {
+export default function index({ autos, agentes }) {
   const { columns } = Columns();
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -33,7 +32,7 @@ export default function index({ autos }) {
   };
 
   function makePDF(data) {
-    // setOpenPDF(true);
+    setOpenPDF(true);
     setDataAuto(data.original);
   }
 
@@ -47,10 +46,23 @@ export default function index({ autos }) {
             xs={12}
             sx={{ mt: 15, display: "flex", justifyContent: "center" }}
           >
-            <PDFDownloadLink
-              document={<Pdf dataAuto={dataAuto} />}
-              fileName="OnLevelPDF"
-            >
+            <Grid sx={{ display: "flex", flexDirection: "row", gap: "15px" }}>
+              <PDFDownloadLink
+                document={<Pdf dataAuto={dataAuto} />}
+                fileName={'PDF' + " " + dataAuto.marca + " " + dataAuto.modelo + " "}
+              >
+                <Button
+                  variant="contained"
+                  sx={{
+                    mt: 1,
+                    backgroundColor: "#d5c6b0",
+                    fontWeight: "600",
+                  }}
+                  size="large"
+                >
+                  Descargar PDF
+                </Button>
+              </PDFDownloadLink>
               <Button
                 variant="contained"
                 sx={{
@@ -59,19 +71,22 @@ export default function index({ autos }) {
                   fontWeight: "600",
                 }}
                 size="large"
+                onClick={() => setOpenPDF(false)}
               >
-                Descargar PDF
+                Volver a la tabla
               </Button>
-            </PDFDownloadLink>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            sx={{ mt: 15, display: { xs: "none", sm: "block" } }}
-          >
-            <PDFViewer style={{ width: "100%", height: "60vh" }}>
-              <Pdf dataAuto={dataAuto} />
-            </PDFViewer>
+            </Grid>
+
+
+            <Grid
+              item
+              xs={12}
+              sx={{ mt: 15, display: { xs: "none", sm: "block", width: "100%", height: "60vh" } }}
+            >
+              <PDFViewer style={{ width: "100%", height: "100vh" }}>
+                <Pdf dataAuto={dataAuto} />
+              </PDFViewer>
+            </Grid>
           </Grid>
         </>
       ) : (
@@ -82,29 +97,35 @@ export default function index({ autos }) {
               dataAuto={dataAuto}
               columns={columns}
               data={data}
-              // makePDF={makePDF}
+              makePDF={makePDF}
               refreshData={refreshData}
             />
           </Grid>
         </>
       )}
-      {/* <img src="https://firebasestorage.googleapis.com/v0/b/onlevelcars.appspot.com/o/a3440891-9eaf-471a-8eb3-c54ff729c95e?alt=media&token=8f8fb79e-3f3b-40f4-9cdf-1b96c5ed5bdb" /> */}
     </Grid>
   );
 }
 
 export const getServerSideProps = async (context) => {
   const querySnapshotTwo = await getDocs(collection(db, "Vehiculo"));
+  const querySnapshotAgentes = await getDocs(collection(db, "Agentes"));
 
   const Vehiculo = [];
+  const Agentes = [];
 
   querySnapshotTwo.forEach((doc) => {
     Vehiculo.push({ ...doc.data(), id: doc.id });
   });
 
+  querySnapshotAgentes.forEach((doc) => {
+    Agentes.push({ ...doc.data(), id: doc.id });
+  });
+
   return {
     props: {
       autos: Vehiculo,
+      agentes: Agentes
     },
   };
 };

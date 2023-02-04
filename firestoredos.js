@@ -18,33 +18,9 @@ const storage = getStorage(firebaseApp)
 
 export default storage
 
-
 export async function uploadFile(file) {
     const storageRef = ref(storage, v4())
     await uploadBytes(storageRef, file)
     const url = await getDownloadURL(storageRef)
     return url
 }
-
-export async function uploadArrayFiles(file) {
-
-    const storageRef = ref(storage, v4())
-    await uploadBytes(storageRef, file)
-
-    let arrayStringURL = []
-
-    // for (let urlDelFile of storageRef) {
-    //     arrayStringURL.push(urlDelFile)
-    //     const urls = await getDownloadURL(storageRef)
-    //     return urls
-    // }
-
-    const url = await getDownloadURL(storageRef)
-
-    arrayStringURL.push(url)
-
-    return arrayStringURL
-
-}
-
-

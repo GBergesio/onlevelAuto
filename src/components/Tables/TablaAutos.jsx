@@ -16,6 +16,7 @@ export default function TablaAutos({
   columns,
   data,
   refreshData,
+  makePDF
 }) {
   const [createModalOpen, setCreateModalOpen] = useState(false);
   const [open, setOpen] = useState(false);
@@ -50,7 +51,7 @@ export default function TablaAutos({
         localization={MRT_Localization_ES}
         renderRowActions={({ row, table }) => (
           <Box sx={{ display: "flex", gap: "0.1rem" }}>
-            {/* <Tooltip arrow placement="left" title="PDF">
+            <Tooltip arrow placement="left" title="PDF">
               <IconButton
                 onClick={() => {
                   makePDF(row);
@@ -58,10 +59,10 @@ export default function TablaAutos({
               >
                 <PictureAsPdf />
               </IconButton>
-            </Tooltip> */}
+            </Tooltip>
             <PDFDownloadLink
               document={<Pdf dataAuto={row.original} />}
-              fileName="OnLevelPDF"
+              fileName={'PDF' + " " + row.original.marca + " " + row.original.modelo + " "}
             >
               <Button>Descargar PDF</Button>
             </PDFDownloadLink>

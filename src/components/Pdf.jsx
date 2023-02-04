@@ -9,6 +9,7 @@ import {
 } from "@react-pdf/renderer";
 
 export default function Pdf({ dataAuto }) {
+
   const styles = StyleSheet.create({
     page: {
       backgroundColor: "#E4E4E4",
@@ -97,7 +98,7 @@ export default function Pdf({ dataAuto }) {
             <View style={styles.imageHeader}>
               <Image
                 style={{ width: "180px", height: "65px" }}
-                alt="bmw"
+                alt="onLevel"
                 src="https://i.ibb.co/NmLcfsH/logo.png"
               />
             </View>
@@ -179,7 +180,7 @@ export default function Pdf({ dataAuto }) {
                   fontSize: "13px",
                 }}
               >
-                {dataAuto.precio}
+                ${dataAuto.precio}
               </Text>
             </View>
           </View>
@@ -187,8 +188,8 @@ export default function Pdf({ dataAuto }) {
         <View style={styles.imageSection}>
           <Image
             style={{ width: "350px" }}
-            alt="bmw"
-            src="https://1.bp.blogspot.com/-T5WCgYeOeqQ/YJ20y2trA2I/AAAAAAAAlHM/dg-DALt1emAlBiVe8x92hNLkKwDkwE5EwCLcBGAsYHQ/s16000/BMW-X6-M-Argentina.jpg"
+            alt="imgPrincipal"
+            src={dataAuto.imagenPrincipal}
           />
         </View>
         <View style={styles.bodySection}>
@@ -318,56 +319,28 @@ export default function Pdf({ dataAuto }) {
         </View>
         <View style={styles.imageSecSection}>
           <View
-            style={{ display: "flex", flexDirection: "column", padding: "5px" }}
+            style={{ display: "flex", flexDirection: "row", padding: "5px", width: "100%", flexWrap: "wrap", gap: "10px", marginRight: "25px" }}
           >
-            <Image
-              style={{ width: "250px", paddingBottom: "5px" }}
-              alt="img1"
-              // src="https://1.bp.blogspot.com/-T5WCgYeOeqQ/YJ20y2trA2I/AAAAAAAAlHM/dg-DALt1emAlBiVe8x92hNLkKwDkwE5EwCLcBGAsYHQ/s16000/BMW-X6-M-Argentina.jpg"
-              src="https://firebasestorage.googleapis.com/v0/b/onlevelcars.appspot.com/o/a3440891-9eaf-471a-8eb3-c54ff729c95e?alt=media&token=7f2e7f97-700e-4504-aa83-6a7eed5be6ff"
-            // src={dataAuto.imagenes[0]}
-            />
-            {/* <Image
-              style={{ width: "250px", paddingBottom: "5px" }}
-              alt="img2"
-              src="https://fotos.jornaldocarro.estadao.com.br/uploads/2019/07/08131347/1a198549-2020-bmw-x6-28.jpg"
-            // src={dataAuto.imagenes[1]}
-            />
-            <Image
-              style={{ width: "250px", paddingBottom: "5px" }}
-              alt="img3"
-              src="https://1.bp.blogspot.com/-T5WCgYeOeqQ/YJ20y2trA2I/AAAAAAAAlHM/dg-DALt1emAlBiVe8x92hNLkKwDkwE5EwCLcBGAsYHQ/s16000/BMW-X6-M-Argentina.jpg"
-            />
-            <Image
-              style={{ width: "250px", paddingBottom: "5px" }}
-              alt="img4"
-              src="https://1.bp.blogspot.com/-T5WCgYeOeqQ/YJ20y2trA2I/AAAAAAAAlHM/dg-DALt1emAlBiVe8x92hNLkKwDkwE5EwCLcBGAsYHQ/s16000/BMW-X6-M-Argentina.jpg"
-            /> */}
+
+            {dataAuto.imagenes !== [] ? (<>{dataAuto.imagenes.map((img, index) => (
+              <Image
+                style={{ paddingBottom: "5px", width: "50%", padding: "5px" }}
+                alt="imagenesAuto"
+                key={index}
+                src={img}
+              />
+            ))}</>) : <></>}
+
+
+            {/* {dataAuto.imagenes.map((img, index) => (
+              <Image
+                style={{ paddingBottom: "5px", width: "50%", padding: "5px" }}
+                alt="imagenesAuto"
+                key={index}
+                src={img}
+              />
+            ))} */}
           </View>
-          {/* <View
-            style={{ display: "flex", flexDirection: "column", padding: "5px" }}
-          >
-            <Image
-              style={{ width: "250px", paddingBottom: "5px" }}
-              alt="img5"
-              src="https://1.bp.blogspot.com/-T5WCgYeOeqQ/YJ20y2trA2I/AAAAAAAAlHM/dg-DALt1emAlBiVe8x92hNLkKwDkwE5EwCLcBGAsYHQ/s16000/BMW-X6-M-Argentina.jpg"
-            />
-            <Image
-              style={{ width: "250px", paddingBottom: "5px" }}
-              alt="img6"
-              src="https://fotos.jornaldocarro.estadao.com.br/uploads/2019/07/08131347/1a198549-2020-bmw-x6-28.jpg"
-            />
-            <Image
-              style={{ width: "250px", paddingBottom: "5px" }}
-              alt="img7"
-              src="https://1.bp.blogspot.com/-T5WCgYeOeqQ/YJ20y2trA2I/AAAAAAAAlHM/dg-DALt1emAlBiVe8x92hNLkKwDkwE5EwCLcBGAsYHQ/s16000/BMW-X6-M-Argentina.jpg"
-            />
-            <Image
-              style={{ width: "250px", paddingBottom: "5px" }}
-              alt="img8"
-              src="https://1.bp.blogspot.com/-T5WCgYeOeqQ/YJ20y2trA2I/AAAAAAAAlHM/dg-DALt1emAlBiVe8x92hNLkKwDkwE5EwCLcBGAsYHQ/s16000/BMW-X6-M-Argentina.jpg"
-            />
-          </View> */}
         </View>
       </Page>
     </Document>

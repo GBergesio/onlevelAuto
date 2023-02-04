@@ -1,4 +1,4 @@
-import { Button, Grid, TextField } from "@mui/material";
+import { Button, Grid, InputLabel, TextField } from "@mui/material";
 import firebaseApp from "../../../firebase";
 import { getFirestore, collection, addDoc, } from "firebase/firestore";
 import React, { useState } from "react";
@@ -8,10 +8,6 @@ import { uploadArrayFiles } from "firestoredos";
 const db = getFirestore(firebaseApp);
 
 export default function CarForm({ onClose, refreshData, setOpen, setMessage }) {
-
-  const [urls, setURLS] = useState([])
-
-  let arrayStringURL = []
 
   const valorInicial = {
     marca: "",
@@ -28,7 +24,8 @@ export default function CarForm({ onClose, refreshData, setOpen, setMessage }) {
     HP: "",
     ubicacion: "",
     adicionales: "",
-    imagenes: arrayStringURL
+    imagenPrincipal: "",
+    imagenes: [],
   };
 
   // Para setear los datos que se van a mandar al form
@@ -39,14 +36,39 @@ export default function CarForm({ onClose, refreshData, setOpen, setMessage }) {
     setDato({ ...dato, [name]: value });
   };
 
-  let arrayFiles = []
+  const [imgPrincipal, setImgPrincipal] = useState("");
 
-  const handleImagenes = (e) => {
+  const handleImagenPrincipal = async (event) => {
 
-    for (let file of e) {
-      arrayFiles.push(file)
+    const file = event.target.files[0]
+    const base64 = await convertBase64(file)
+
+    setImgPrincipal(base64)
+
+  }
+
+  let arrayB64 = []
+
+  const handleFileRead = async (event) => {
+
+    for (let file of event) {
+      const base64 = await convertBase64(file)
+      arrayB64.push(base64)
     }
+    console.log("array b64", arrayB64)
+  }
 
+  const convertBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file)
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      }
+      fileReader.onerror = (error) => {
+        reject(error);
+      }
+    })
   }
 
 
@@ -54,21 +76,6 @@ export default function CarForm({ onClose, refreshData, setOpen, setMessage }) {
     e.preventDefault();
 
     try {
-      for (let file of arrayFiles) {
-        const result = await uploadFile(file)
-        arrayStringURL.push(result)
-      }
-      setURLS(arrayStringURL)
-      // console.log("arrayStringURL dentro del try", arrayStringURL)
-      // console.log("urls dentro del try", urls)
-    } catch (error) {
-      console.error(error)
-    }
-
-    try {
-      // await addDoc(collection(db, "Vehiculo"), {
-      //   ...dato,
-      // });
       await addDoc(collection(db, "Vehiculo"), {
         marca: dato.marca,
         modelo: dato.modelo,
@@ -84,7 +91,8 @@ export default function CarForm({ onClose, refreshData, setOpen, setMessage }) {
         HP: dato.HP,
         ubicacion: dato.ubicacion,
         adicionales: dato.adicionales,
-        imagenes: arrayStringURL
+        imagenPrincipal: imgPrincipal,
+        imagenes: arrayB64
       });
     } catch (error) {
       console.log(error);
@@ -93,12 +101,10 @@ export default function CarForm({ onClose, refreshData, setOpen, setMessage }) {
     refreshData();
     setOpen(true);
     setMessage("Creado, refrescando página")
-    // setTimeout(() => {
-    //   window.location.reload(false);
-    // }, 1000);
+    setTimeout(() => {
+      window.location.reload(false);
+    }, 1000);
   };
-
-  // console.log("valorInicial", valorInicial)
 
   return (
     <Grid component="form" noValidate onSubmit={enviarInfo}>
@@ -119,7 +125,6 @@ export default function CarForm({ onClose, refreshData, setOpen, setMessage }) {
             placeholder="Marca"
             value={dato.marca}
             onChange={obtenerInputs}
-            required
             sx={{ paddingBottom: "8px" }}
           />
           <TextField
@@ -131,7 +136,6 @@ export default function CarForm({ onClose, refreshData, setOpen, setMessage }) {
             placeholder="Modelo"
             value={dato.modelo}
             onChange={obtenerInputs}
-            required
             sx={{ paddingBottom: "8px" }}
           />
         </Grid>
@@ -145,7 +149,6 @@ export default function CarForm({ onClose, refreshData, setOpen, setMessage }) {
             placeholder="Version"
             value={dato.version}
             onChange={obtenerInputs}
-            required
             sx={{ paddingBottom: "8px" }}
           />
           <TextField
@@ -157,7 +160,6 @@ export default function CarForm({ onClose, refreshData, setOpen, setMessage }) {
             placeholder="Precio"
             value={dato.precio}
             onChange={obtenerInputs}
-            required
             sx={{ paddingBottom: "8px" }}
           />
         </Grid>
@@ -171,7 +173,6 @@ export default function CarForm({ onClose, refreshData, setOpen, setMessage }) {
             placeholder="SUV, Deportivo, 4X4"
             value={dato.tipo}
             onChange={obtenerInputs}
-            required
             sx={{ paddingBottom: "8px" }}
           />
           <TextField
@@ -183,7 +184,6 @@ export default function CarForm({ onClose, refreshData, setOpen, setMessage }) {
             placeholder="Año"
             value={dato.año}
             onChange={obtenerInputs}
-            required
             sx={{ paddingBottom: "8px" }}
           />
           <TextField
@@ -195,7 +195,6 @@ export default function CarForm({ onClose, refreshData, setOpen, setMessage }) {
             placeholder="HP"
             value={dato.HP}
             onChange={obtenerInputs}
-            required
             sx={{ paddingBottom: "8px" }}
           />
           <TextField
@@ -207,7 +206,6 @@ export default function CarForm({ onClose, refreshData, setOpen, setMessage }) {
             placeholder="Transmision"
             value={dato.transmision}
             onChange={obtenerInputs}
-            required
             sx={{ paddingBottom: "8px" }}
           />
         </Grid>
@@ -221,7 +219,6 @@ export default function CarForm({ onClose, refreshData, setOpen, setMessage }) {
             placeholder="Kilometraje"
             value={dato.kilometraje}
             onChange={obtenerInputs}
-            required
             sx={{ paddingBottom: "8px" }}
           />
           <TextField
@@ -233,7 +230,6 @@ export default function CarForm({ onClose, refreshData, setOpen, setMessage }) {
             placeholder="Puertas"
             value={dato.puertas}
             onChange={obtenerInputs}
-            required
             sx={{ paddingBottom: "8px" }}
           />
           <TextField
@@ -245,7 +241,6 @@ export default function CarForm({ onClose, refreshData, setOpen, setMessage }) {
             placeholder="Permuta"
             value={dato.permuta}
             onChange={obtenerInputs}
-            required
             sx={{ paddingBottom: "8px" }}
           />
           <TextField
@@ -257,7 +252,6 @@ export default function CarForm({ onClose, refreshData, setOpen, setMessage }) {
             placeholder="Motor"
             value={dato.motor}
             onChange={obtenerInputs}
-            required
             sx={{ paddingBottom: "8px" }}
           />
         </Grid>
@@ -271,7 +265,7 @@ export default function CarForm({ onClose, refreshData, setOpen, setMessage }) {
             placeholder="Tipo de combustible"
             value={dato.tipoCombustible}
             onChange={obtenerInputs}
-            required
+
             sx={{ paddingBottom: "8px" }}
           />
           <TextField
@@ -283,7 +277,7 @@ export default function CarForm({ onClose, refreshData, setOpen, setMessage }) {
             placeholder="Adicionales"
             value={dato.adicionales}
             onChange={obtenerInputs}
-            required
+
             sx={{ paddingBottom: "8px" }}
           />
           <TextField
@@ -295,12 +289,28 @@ export default function CarForm({ onClose, refreshData, setOpen, setMessage }) {
             placeholder="Ubicación"
             value={dato.ubicacion}
             onChange={obtenerInputs}
-            required
+
             sx={{ paddingBottom: "8px" }}
           />
         </Grid>
-        <Grid item xs={12}>
-          <input type="file" name="imagenes" id="imagenes" multiple onChange={(e) => handleImagenes(e.target.files)} />
+        <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", flexDirection: "column", gap: "15px" }}>
+          <label for="imagenPrincipal">Imagen Principal</label>
+          <input
+            type="file"
+            name='imagenPrincipal'
+            id='imagenPrincipal'
+            inputProps={{ accept: 'image/*' }}
+            onChange={e => handleImagenPrincipal(e)}
+          />
+          <label for="imagenes">Más imágenes</label>
+          <input
+            name='imagenes'
+            id='imagenes'
+            type="file"
+            multiple
+            inputProps={{ accept: 'image/*' }}
+            onChange={e => handleFileRead(e.target.files)}
+          />
         </Grid>
       </Grid>
       <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end" }}>
