@@ -18,6 +18,8 @@ export default function index({ autos, agentes }) {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [openPDF, setOpenPDF] = useState(false);
   // eslint-disable-next-line react-hooks/rules-of-hooks
+  const [verTabla, setVerTabla] = useState(false);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [dataAuto, setDataAuto] = useState([]);
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [data, setData] = useState([]);
@@ -61,7 +63,22 @@ export default function index({ autos, agentes }) {
   return (
     <Grid>
       <AppBarComp agentesUS={agentesUS} vendedor={vendedor} handleAgente={handleAgente} />
-      {openPDF === true ? (
+      <Button sx={{ mt: 25 }} onClick={() => setVerTabla(true)}>Ver</Button>
+      {verTabla === true ? (<>
+        {" "}
+        <Grid item xs={12} sx={{ mt: 8 }}>
+          <TablaAutos
+            agentesUS={agentesUS}
+            dataAuto={dataAuto}
+            columns={columns}
+            data={data}
+            makePDF={makePDF}
+            vendedor={vendedor}
+            refreshData={refreshData}
+          />
+        </Grid>
+      </>) : "Sin ver tabla"}
+      {/* {openPDF === true ? (
         <>
           <Grid
             item
@@ -124,7 +141,7 @@ export default function index({ autos, agentes }) {
             />
           </Grid>
         </>
-      )}
+      )} */}
     </Grid>
   );
 }

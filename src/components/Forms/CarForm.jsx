@@ -332,17 +332,6 @@ export default function CarForm({ onClose, refreshData, setOpen, setMessage, set
             inputProps={{ accept: 'image/*' }}
             onChange={e => handleFileRead(e.target.files)}
           />
-          <Grid>
-            {/* {imgPrincipalNombre ? (<Typography sx={{ fontSize: 10 }}>Nombre: ${imgPrincipalNombre.name}</Typography>) : ""} */}
-
-            {/* {arrayImagenesNombres.map((img) => {
-              { img.size > 1048487 ? (<Typography sx={{ color: "red", fontSize: 10 }}>El peso de la imagen debe ser menor a 1048487Kbs - El peso actual es: {img.size} Kbs</Typography>) : "" }
-            })} */}
-
-            {/* {arrImgsNombres.map((img) => { console.log("ke", img) })} */}
-            {/* {arrImgsNombres.length === 0 ? "No hay" : <Typography>{arrImgsNombres.map((img) => { img.name })}</Typography>} */}
-            {/* {imgPrincipalNombre.size > 1048487 ? (<Typography sx={{ color: "red", fontSize: 10 }}>El peso de la imagen debe ser menor a 1048487Kbs - El peso actual es: {imgPrincipalNombre.size} Kbs</Typography>) : ""} */}
-          </Grid>
         </Grid>
       </Grid>
       <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end" }}>
