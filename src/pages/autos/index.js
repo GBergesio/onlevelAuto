@@ -59,95 +59,106 @@ export default function index({ autos, agentes }) {
   }
 
   return (
+    // <Grid>
+    //   <AppBarComp agentesUS={agentesUS} vendedor={vendedor} handleAgente={handleAgente} />
+    //   {openPDF === true ? (
+    //     <>
+    //       <Grid
+    //         item
+    //         xs={12}
+    //         sx={{ mt: 10, pl: 1, pr: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}
+    //       >
+    //         <Grid sx={{ display: "flex", flexDirection: "row", gap: "15px" }}>
+    //           <PDFDownloadLink
+    //             document={<Pdf dataAuto={dataAuto} vendedor={vendedor} />}
+    //             fileName={'PDF' + " " + dataAuto.marca + " " + dataAuto.modelo + " "}
+    //           >
+    //             <Button
+    //               variant="contained"
+    //               sx={{
+    //                 mt: 1,
+    //                 backgroundColor: "#d5c6b0",
+    //                 fontWeight: "600",
+    //               }}
+    //               size="large"
+    //             >
+    //               Descargar PDF
+    //             </Button>
+    //           </PDFDownloadLink>
+    //           <Button
+    //             variant="contained"
+    //             sx={{
+    //               mt: 1,
+    //               backgroundColor: "#d5c6b0",
+    //               fontWeight: "600",
+    //             }}
+    //             size="large"
+    //             onClick={() => setOpenPDF(false)}
+    //           >
+    //             Volver a la tabla
+    //           </Button>
+    //         </Grid>
+    //         <Grid
+    //           item
+    //           xs={12}
+    //           sx={{ mt: 5, display: { xs: "none", sm: "block", width: "100%", height: "60vh" } }}
+    //         >
+    //           <PDFViewer style={{ width: "100%", height: "100vh" }}>
+    //             <Pdf dataAuto={dataAuto} vendedor={vendedor} />
+    //           </PDFViewer>
+    //         </Grid>
+    //       </Grid>
+    //     </>
+    //   ) : (
+    //     <>
+    //       {" "}
+    //       <Grid item xs={12} sx={{ mt: 8 }}>
+    //         <TablaAutos
+    //           agentesUS={agentesUS}
+    //           dataAuto={dataAuto}
+    //           columns={columns}
+    //           data={data}
+    //           makePDF={makePDF}
+    //           vendedor={vendedor}
+    //           refreshData={refreshData}
+    //         />
+    //       </Grid>
+    //     </>
+    //   )}
+    // </Grid>
     <Grid>
-      <AppBarComp agentesUS={agentesUS} vendedor={vendedor} handleAgente={handleAgente} />
-      {openPDF === true ? (
-        <>
-          <Grid
-            item
-            xs={12}
-            sx={{ mt: 10, pl: 1, pr: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}
-          >
-            <Grid sx={{ display: "flex", flexDirection: "row", gap: "15px" }}>
-              <PDFDownloadLink
-                document={<Pdf dataAuto={dataAuto} vendedor={vendedor} />}
-                fileName={'PDF' + " " + dataAuto.marca + " " + dataAuto.modelo + " "}
-              >
-                <Button
-                  variant="contained"
-                  sx={{
-                    mt: 1,
-                    backgroundColor: "#d5c6b0",
-                    fontWeight: "600",
-                  }}
-                  size="large"
-                >
-                  Descargar PDF
-                </Button>
-              </PDFDownloadLink>
-              <Button
-                variant="contained"
-                sx={{
-                  mt: 1,
-                  backgroundColor: "#d5c6b0",
-                  fontWeight: "600",
-                }}
-                size="large"
-                onClick={() => setOpenPDF(false)}
-              >
-                Volver a la tabla
-              </Button>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              sx={{ mt: 5, display: { xs: "none", sm: "block", width: "100%", height: "60vh" } }}
-            >
-              <PDFViewer style={{ width: "100%", height: "100vh" }}>
-                <Pdf dataAuto={dataAuto} vendedor={vendedor} />
-              </PDFViewer>
-            </Grid>
-          </Grid>
-        </>
-      ) : (
-        <>
-          {" "}
-          <Grid item xs={12} sx={{ mt: 8 }}>
-            <TablaAutos
-              agentesUS={agentesUS}
-              dataAuto={dataAuto}
-              columns={columns}
-              data={data}
-              makePDF={makePDF}
-              vendedor={vendedor}
-              refreshData={refreshData}
-            />
-          </Grid>
-        </>
-      )}
+      <TablaAutos
+        agentesUS={agentesUS}
+        dataAuto={dataAuto}
+        columns={columns}
+        data={data}
+        makePDF={makePDF}
+        vendedor={vendedor}
+        refreshData={refreshData}
+      />
     </Grid>
   );
 }
 
-export const getServerSideProps = async (context) => {
-  const querySnapshotTwo = await getDocs(collection(db, "Vehiculo"));
-  const querySnapshotAgentes = await getDocs(collection(db, "Agentes"));
+// export const getServerSideProps = async (context) => {
+//   const querySnapshotTwo = await getDocs(collection(db, "Vehiculo"));
+//   const querySnapshotAgentes = await getDocs(collection(db, "Agentes"));
 
-  const Vehiculo = [];
-  const Agentes = [];
+//   const Vehiculo = [];
+//   const Agentes = [];
 
-  querySnapshotTwo.forEach((doc) => {
-    Vehiculo.push({ ...doc.data(), id: doc.id });
-  });
+//   querySnapshotTwo.forEach((doc) => {
+//     Vehiculo.push({ ...doc.data(), id: doc.id });
+//   });
 
-  querySnapshotAgentes.forEach((doc) => {
-    Agentes.push({ ...doc.data(), id: doc.id });
-  });
+//   querySnapshotAgentes.forEach((doc) => {
+//     Agentes.push({ ...doc.data(), id: doc.id });
+//   });
 
-  return {
-    props: {
-      autos: Vehiculo,
-      agentes: Agentes
-    },
-  };
-};
+//   return {
+//     props: {
+//       autos: Vehiculo,
+//       agentes: Agentes
+//     },
+//   };
+// };
