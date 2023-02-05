@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import AppBarComp from "@/components/AppBar";
 import TablaAutos from "@/components/Tables/TablaAutos";
-import { Button, Grid, Stack, Typography } from "@mui/material";
+import { Button, Grid, } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Columns from "@/components/Tables/Columns/CarColumns";
 import Pdf from "@/components/Pdf";
@@ -22,14 +22,36 @@ export default function index({ autos, agentes }) {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [data, setData] = useState([]);
 
-  useEffect(() => {
-    refreshData();
-  });
+  const [agentesUS, setAgentes] = useState([]);
+  const [vendedor, setVendedor] = useState({ nombre: "Andres", apellido: "Gagliano", telefono: "5491153073741" })
 
-  const refreshData = () => {
-    setData(autos);
-    console.log("se ejectuta el refresh");
-  };
+  const handleAgente = (e) => {
+    setVendedor(e.target.value)
+  }
+
+
+  async function refreshData() {
+    const vehiculosCollection = await getDocs(collection(db, "Vehiculo"));
+    const agentesCollection = await getDocs(collection(db, "Agentes"));
+    const VehiculosArr = [];
+    const Agentes = [];
+
+    agentesCollection.forEach((doc) => {
+      Agentes.push({ ...doc.data(), id: doc.id });
+    });
+
+    vehiculosCollection.forEach((doc) => {
+      VehiculosArr.push({ ...doc.data(), id: doc.id });
+    });
+
+    setAgentes(Agentes)
+    setData(VehiculosArr)
+  }
+
+  useEffect(() => {
+    refreshData()
+  }, []);
+
 
   function makePDF(data) {
     setOpenPDF(true);
@@ -38,17 +60,17 @@ export default function index({ autos, agentes }) {
 
   return (
     <Grid>
-      <AppBarComp />
+      <AppBarComp agentesUS={agentesUS} vendedor={vendedor} handleAgente={handleAgente} />
       {openPDF === true ? (
         <>
           <Grid
             item
             xs={12}
-            sx={{ mt: 15, display: "flex", justifyContent: "center" }}
+            sx={{ mt: 10, pl: 1, pr: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}
           >
             <Grid sx={{ display: "flex", flexDirection: "row", gap: "15px" }}>
               <PDFDownloadLink
-                document={<Pdf dataAuto={dataAuto} />}
+                document={<Pdf dataAuto={dataAuto} vendedor={vendedor} />}
                 fileName={'PDF' + " " + dataAuto.marca + " " + dataAuto.modelo + " "}
               >
                 <Button
@@ -76,15 +98,13 @@ export default function index({ autos, agentes }) {
                 Volver a la tabla
               </Button>
             </Grid>
-
-
             <Grid
               item
               xs={12}
-              sx={{ mt: 15, display: { xs: "none", sm: "block", width: "100%", height: "60vh" } }}
+              sx={{ mt: 5, display: { xs: "none", sm: "block", width: "100%", height: "60vh" } }}
             >
               <PDFViewer style={{ width: "100%", height: "100vh" }}>
-                <Pdf dataAuto={dataAuto} />
+                <Pdf dataAuto={dataAuto} vendedor={vendedor} />
               </PDFViewer>
             </Grid>
           </Grid>
@@ -94,10 +114,12 @@ export default function index({ autos, agentes }) {
           {" "}
           <Grid item xs={12} sx={{ mt: 8 }}>
             <TablaAutos
+              agentesUS={agentesUS}
               dataAuto={dataAuto}
               columns={columns}
               data={data}
               makePDF={makePDF}
+              vendedor={vendedor}
               refreshData={refreshData}
             />
           </Grid>

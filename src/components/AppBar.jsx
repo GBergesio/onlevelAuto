@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -7,8 +7,9 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { useRouter } from "next/router";
+import { FormControl, Grid, InputLabel, MenuItem, Select } from "@mui/material";
 
-export default function AppBarComp() {
+export default function AppBarComp({ agentesUS, handleAgente, vendedor }) {
   const router = useRouter();
 
   const goTo = (site) => {
@@ -40,6 +41,22 @@ export default function AppBarComp() {
           >
             OnLevel Group
           </Typography>
+          <Grid sx={{ mt: 1, mb: 1, width: "35%" }}>
+            <FormControl sx={{ width: "100%" }}>
+              <InputLabel id="labelAgente" sx={{ color: "white" }}>Agente vendedor</InputLabel>
+              <Select
+                labelId="labelAgente"
+                id="labelAgenteId"
+                label="Agente vendedor"
+                value={vendedor}
+                onChange={(e) => handleAgente(e)}
+                sx={{ color: "white" }}
+              >
+                {agentesUS.map((agent) => (<MenuItem key={agent.id} value={agent} >{agent.nombre}</MenuItem>))}
+                {/* <MenuItem>{agentesUS[0].nombre}</MenuItem> */}
+              </Select>
+            </FormControl>
+          </Grid>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             <Button sx={{ color: "#fff" }} onClick={() => goTo("/")}>
               Inicio
@@ -47,6 +64,6 @@ export default function AppBarComp() {
           </Box>
         </Toolbar>
       </AppBar>
-    </Box>
+    </Box >
   );
 }

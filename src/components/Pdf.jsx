@@ -6,9 +6,10 @@ import {
   View,
   StyleSheet,
   Image,
+  Link,
 } from "@react-pdf/renderer";
 
-export default function Pdf({ dataAuto }) {
+export default function Pdf({ dataAuto, vendedor }) {
 
   const styles = StyleSheet.create({
     page: {
@@ -111,8 +112,9 @@ export default function Pdf({ dataAuto }) {
                 paddingTop: "10px",
               }}
             >
-              <Text style={styles.textHeader}>+54 9 11 3238-7973</Text>
-              <Text style={styles.textHeader}>Ayelen Paleo</Text>
+              {/* <Text style={styles.textHeader}>{vendedor.telefono}</Text> */}
+              <Link style={styles.textHeader} src={`https://api.whatsapp.com/send?phone=${vendedor.telefono}`}>+{vendedor.telefono}</Link>
+              <Text style={styles.textHeader}>{vendedor.nombre} {vendedor.apellido}</Text>
               <View
                 style={{
                   backgroundColor: "#e5c69e",
@@ -330,16 +332,6 @@ export default function Pdf({ dataAuto }) {
                 src={img}
               />
             ))}</>) : <></>}
-
-
-            {/* {dataAuto.imagenes.map((img, index) => (
-              <Image
-                style={{ paddingBottom: "5px", width: "50%", padding: "5px" }}
-                alt="imagenesAuto"
-                key={index}
-                src={img}
-              />
-            ))} */}
           </View>
         </View>
       </Page>

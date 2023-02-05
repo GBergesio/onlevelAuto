@@ -1,13 +1,17 @@
 import AppBarComp from "@/components/AppBar";
-import Pdf from "@/components/Pdf";
-import styles from "@/styles/Home.module.css";
-import { Button, Grid, Stack } from "@mui/material";
+import { Alert, Button, Grid, Snackbar } from "@mui/material";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import CreateModal from "@/components/Modales/CreateModal";
+import CreateAgente from "@/components/Modales/CreateAgente";
 
 function Home() {
+
   const [createModalOpen, setCreateModalOpen] = useState(false);
+  const [createAgenteOpen, setCreateAgenteOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [severity, setSeverity] = useState("");
 
   const router = useRouter();
 
@@ -15,10 +19,20 @@ function Home() {
     router.push(site, undefined, { shallow: true });
   };
 
+  function refreshData() {
+    console.log("")
+  }
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
   return (
     <>
       <div>
-        <AppBarComp />
         <Grid
           container
           spacing={1}
@@ -43,11 +57,21 @@ function Home() {
           <Grid item xs={12}>
             <Button
               variant="contained"
-              sx={{ mt: 10,backgroundColor: "#158E5E",fontWeight: "600", }}
-              onClick={() => setCreateModalOpen(true)} 
+              sx={{ mt: 10, backgroundColor: "#158E5E", fontWeight: "600", }}
+              onClick={() => setCreateModalOpen(true)}
               size="large"
             >
-              Crear nuevo auto
+              Crear nuevo vehículo
+            </Button>
+          </Grid>
+          <Grid item xs={12}>
+            <Button
+              variant="contained"
+              sx={{ mt: 10, backgroundColor: "#158E5E", fontWeight: "600", }}
+              onClick={() => setCreateAgenteOpen(true)}
+              size="large"
+            >
+              Crear nuevo vendedor
             </Button>
           </Grid>
         </Grid>
@@ -55,7 +79,28 @@ function Home() {
       <CreateModal
         open={createModalOpen}
         onClose={() => setCreateModalOpen(false)}
+        setOpen={setOpen}
+        setMessage={setMessage}
+        setSeverity={setSeverity}
+        refreshData={refreshData}
       />
+      <CreateAgente
+        open={createAgenteOpen}
+        onClose={() => setCreateAgenteOpen(false)}
+        setOpen={setOpen}
+        setMessage={setMessage}
+        setSeverity={setSeverity}
+        refreshData={refreshData}
+      />
+      <Snackbar
+        open={open}
+        autoHideDuration={1000}
+        onClose={handleClose}
+      >
+        <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
+          {message}
+        </Alert>
+      </Snackbar>
     </>
   );
 }

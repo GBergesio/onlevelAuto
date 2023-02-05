@@ -1,13 +1,13 @@
-import { Button, Grid, InputLabel, TextField } from "@mui/material";
+import { Button, Grid, TextField, Typography } from "@mui/material";
 import firebaseApp from "../../../firebase";
 import { getFirestore, collection, addDoc, } from "firebase/firestore";
 import React, { useState } from "react";
-import { uploadFile } from "firestoredos";
-import { uploadArrayFiles } from "firestoredos";
+// import { uploadFile } from "firestoredos";
+// import { uploadArrayFiles } from "firestoredos";
 
 const db = getFirestore(firebaseApp);
 
-export default function CarForm({ onClose, refreshData, setOpen, setMessage }) {
+export default function CarForm({ onClose, refreshData, setOpen, setMessage, setSeverity }) {
 
   const valorInicial = {
     marca: "",
@@ -37,6 +37,8 @@ export default function CarForm({ onClose, refreshData, setOpen, setMessage }) {
   };
 
   const [imgPrincipal, setImgPrincipal] = useState("");
+  const [imgPrincipalNombre, setImgPrincipalNombre] = useState("");
+  const [arrImgsNombres, setArrImgsNombres] = useState([{ name: "", size: 123 }]);
 
   const handleImagenPrincipal = async (event) => {
 
@@ -44,6 +46,7 @@ export default function CarForm({ onClose, refreshData, setOpen, setMessage }) {
     const base64 = await convertBase64(file)
 
     setImgPrincipal(base64)
+    setImgPrincipalNombre(file)
 
   }
 
@@ -55,8 +58,12 @@ export default function CarForm({ onClose, refreshData, setOpen, setMessage }) {
       const base64 = await convertBase64(file)
       arrayB64.push(base64)
     }
-    console.log("array b64", arrayB64)
+    setArrImgsNombres(event)
+    // console.log("array b64", arrayB64)
   }
+
+  // console.log("array imgs arrayImagenesNombres", arrImgsNombres)
+
 
   const convertBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -94,16 +101,24 @@ export default function CarForm({ onClose, refreshData, setOpen, setMessage }) {
         imagenPrincipal: imgPrincipal,
         imagenes: arrayB64
       });
+      setOpen(true);
+      setMessage("Creado, refrescando página")
+      setSeverity("success")
+      setDato({ ...valorInicial });
+      onClose()
     } catch (error) {
-      console.log(error);
+      let errorImage = 'FirebaseError: The value of property "imagenPrincipal" is longer than 1048487 bytes.'
+      setOpen(true);
+      setSeverity("error")
+
+      if (error = errorImage) {
+        setMessage("Error! Imagen principal excede 1MB")
+      }
+      else {
+        setMessage("Error")
+      }
     }
-    setDato({ ...valorInicial });
     refreshData();
-    setOpen(true);
-    setMessage("Creado, refrescando página")
-    setTimeout(() => {
-      window.location.reload(false);
-    }, 1000);
   };
 
   return (
@@ -302,6 +317,12 @@ export default function CarForm({ onClose, refreshData, setOpen, setMessage }) {
             inputProps={{ accept: 'image/*' }}
             onChange={e => handleImagenPrincipal(e)}
           />
+          {/* <p>Imagen: {imgPrincipalNombre.name}</p> */}
+          {/* {imgPrincipalNombre ? `Nombre: ${imgPrincipalNombre.name}` : ""} */}
+          <Grid>
+            {/* {imgPrincipalNombre ? (<Typography sx={{ fontSize: 10 }}>Nombre: ${imgPrincipalNombre.name}</Typography>) : ""} */}
+            {imgPrincipalNombre.size > 1048487 ? (<Typography sx={{ color: "red", fontSize: 10 }}>El peso de la imagen debe ser menor a 1048487Kbs - El peso actual es: {imgPrincipalNombre.size} Kbs</Typography>) : ""}
+          </Grid>
           <label for="imagenes">Más imágenes</label>
           <input
             name='imagenes'
@@ -311,6 +332,17 @@ export default function CarForm({ onClose, refreshData, setOpen, setMessage }) {
             inputProps={{ accept: 'image/*' }}
             onChange={e => handleFileRead(e.target.files)}
           />
+          <Grid>
+            {/* {imgPrincipalNombre ? (<Typography sx={{ fontSize: 10 }}>Nombre: ${imgPrincipalNombre.name}</Typography>) : ""} */}
+
+            {/* {arrayImagenesNombres.map((img) => {
+              { img.size > 1048487 ? (<Typography sx={{ color: "red", fontSize: 10 }}>El peso de la imagen debe ser menor a 1048487Kbs - El peso actual es: {img.size} Kbs</Typography>) : "" }
+            })} */}
+
+            {/* {arrImgsNombres.map((img) => { console.log("ke", img) })} */}
+            {/* {arrImgsNombres.length === 0 ? "No hay" : <Typography>{arrImgsNombres.map((img) => { img.name })}</Typography>} */}
+            {/* {imgPrincipalNombre.size > 1048487 ? (<Typography sx={{ color: "red", fontSize: 10 }}>El peso de la imagen debe ser menor a 1048487Kbs - El peso actual es: {imgPrincipalNombre.size} Kbs</Typography>) : ""} */}
+          </Grid>
         </Grid>
       </Grid>
       <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end" }}>
