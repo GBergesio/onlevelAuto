@@ -24,7 +24,7 @@ export default function TablaAutos({
   const [confirmationModalOpen, setConfirmationModalOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
-  const [severity, setSeverity] = useState("");
+  const [severity, setSeverity] = useState("info");
   const [dataR, setDataR] = useState([]);
 
   const handleDeleteRow = async (row) => {

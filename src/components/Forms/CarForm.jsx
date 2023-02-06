@@ -38,7 +38,7 @@ export default function CarForm({ onClose, refreshData, setOpen, setMessage, set
 
   const [imgPrincipal, setImgPrincipal] = useState("");
   const [imgPrincipalNombre, setImgPrincipalNombre] = useState("");
-  const [arrImgsNombres, setArrImgsNombres] = useState([{ name: "", size: 123 }]);
+  const [arrImgsNombres, setArrImgsNombres] = useState([]);
 
   const handleImagenPrincipal = async (event) => {
 
@@ -58,10 +58,11 @@ export default function CarForm({ onClose, refreshData, setOpen, setMessage, set
       const base64 = await convertBase64(file)
       arrayB64.push(base64)
     }
-    setArrImgsNombres(event)
-    // console.log("array b64", arrayB64)
+    setArrImgsNombres(arrayB64)
+    // setArrImgsNombres(arrayB64)
+    console.log("array b64", arrayB64)
   }
-
+  console.log("array arrImgsNombres afu", arrImgsNombres)
   // console.log("array imgs arrayImagenesNombres", arrImgsNombres)
 
 
@@ -99,13 +100,15 @@ export default function CarForm({ onClose, refreshData, setOpen, setMessage, set
         ubicacion: dato.ubicacion,
         adicionales: dato.adicionales,
         imagenPrincipal: imgPrincipal,
-        imagenes: arrayB64
+        // imagenes: arrayB64
+        imagenes: arrImgsNombres
       });
       setOpen(true);
       setMessage("Creado, refrescando página")
       setSeverity("success")
       setDato({ ...valorInicial });
       onClose()
+      console.log("arrImgsNombres adentro del send", arrImgsNombres)
     } catch (error) {
       let errorImage = 'FirebaseError: The value of property "imagenPrincipal" is longer than 1048487 bytes.'
       setOpen(true);
