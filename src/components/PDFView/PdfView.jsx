@@ -41,7 +41,7 @@ const PdfView = ({ dataAuto, vendedor, setOpenPDF }) => {
                         Volver a la tabla
                     </Button>
                 </Grid>
-                {/* <Grid
+                <Grid
                     item
                     xs={12}
                     sx={{ mt: 5, display: { xs: "none", sm: "block", width: "100%", height: "60vh" } }}
@@ -49,7 +49,7 @@ const PdfView = ({ dataAuto, vendedor, setOpenPDF }) => {
                     <PDFViewer style={{ width: "100%", height: "100vh" }}>
                         <Pdf dataAuto={dataAuto} vendedor={vendedor} />
                     </PDFViewer>
-                </Grid> */}
+                </Grid>
             </Grid>
         </>
     );

@@ -13,7 +13,8 @@ export default function Pdf({ dataAuto, vendedor }) {
 
   const styles = StyleSheet.create({
     page: {
-      backgroundColor: "#E4E4E4",
+      // backgroundColor: "#E4E4E4",
+      backgroundColor: "#FFFFFF",
     },
     header: {
       display: "flex",
@@ -78,7 +79,7 @@ export default function Pdf({ dataAuto, vendedor }) {
     },
     textoCategorias: {
       fontSize: "12px",
-      paddingBottom: "6px",
+      paddingBottom: "10px",
     },
     textoCategoriasD: {
       fontSize: "12px",
@@ -233,28 +234,28 @@ export default function Pdf({ dataAuto, vendedor }) {
               style={{ display: "flex", flexDirection: "column", width: "27%" }}
             >
               <Text style={styles.textoCategorias}>
-                Marca:&nbsp;&nbsp;
+                Marca:&nbsp;
                 <Text style={{
                   fontWeight: "ultrabold",
                   fontFamily: "Helvetica-Bold"
                 }}>{dataAuto.marca}</Text>
               </Text>
               <Text style={styles.textoCategorias}>
-                Modelo:&nbsp;&nbsp;
+                Modelo:&nbsp;
                 <Text style={{
                   fontWeight: "ultrabold",
                   fontFamily: "Helvetica-Bold"
                 }}>{dataAuto.modelo}</Text>
               </Text>
               <Text style={styles.textoCategorias}>
-                Año:&nbsp;&nbsp;
+                Año:&nbsp;
                 <Text style={{
                   fontWeight: "ultrabold",
                   fontFamily: "Helvetica-Bold"
                 }}>{dataAuto.año}</Text>
               </Text>
               <Text style={styles.textoCategorias}>
-                Versión:&nbsp;&nbsp;
+                Versión:&nbsp;
                 <Text style={{
                   fontWeight: "ultrabold",
                   fontFamily: "Helvetica-Bold"
@@ -265,28 +266,28 @@ export default function Pdf({ dataAuto, vendedor }) {
               style={{ display: "flex", flexDirection: "column", width: "28%" }}
             >
               <Text style={styles.textoCategorias}>
-                Kilometraje:&nbsp;&nbsp;
+                Kilometraje:&nbsp;
                 <Text style={{
                   fontWeight: "ultrabold",
                   fontFamily: "Helvetica-Bold"
                 }}>{dataAuto.kilometraje}</Text>
               </Text>
               <Text style={styles.textoCategorias}>
-                Transmisión:&nbsp;&nbsp;
+                Transmisión:&nbsp;
                 <Text style={{
                   fontWeight: "ultrabold",
                   fontFamily: "Helvetica-Bold"
                 }}>{dataAuto.transmision}</Text>
               </Text>
               <Text style={styles.textoCategorias}>
-                Puertas:&nbsp;&nbsp;
+                Puertas:&nbsp;
                 <Text style={{
                   fontWeight: "ultrabold",
                   fontFamily: "Helvetica-Bold"
                 }}>{dataAuto.puertas}</Text>
               </Text>
               <Text style={styles.textoCategorias}>
-                Motor:&nbsp;&nbsp;
+                Motor:&nbsp;
                 <Text style={{
                   fontWeight: "ultrabold",
                   fontFamily: "Helvetica-Bold"
@@ -302,28 +303,28 @@ export default function Pdf({ dataAuto, vendedor }) {
               }}
             >
               <Text style={styles.textoCategorias}>
-                Tipo de combustible:&nbsp;&nbsp;
+                Tipo de combustible:&nbsp;
                 <Text style={{
                   fontWeight: "ultrabold",
                   fontFamily: "Helvetica-Bold"
                 }}>{dataAuto.tipoCombustible}</Text>
               </Text>
               <Text style={styles.textoCategorias}>
-                Acepta permuta:&nbsp;&nbsp;
+                Acepta permuta:&nbsp;
                 <Text style={{
                   fontWeight: "ultrabold",
                   fontFamily: "Helvetica-Bold"
                 }}>{dataAuto.permuta}</Text>
               </Text>
               <Text style={styles.textoCategorias}>
-                HP:&nbsp;&nbsp;
+                HP:&nbsp;
                 <Text style={{
                   fontWeight: "ultrabold",
                   fontFamily: "Helvetica-Bold"
                 }}>{dataAuto.HP}</Text>
               </Text>
               <Text style={styles.textoCategorias}>
-                Ubicación:&nbsp;&nbsp;
+                Ubicación:&nbsp;
                 <Text style={{
                   fontWeight: "ultrabold",
                   fontFamily: "Helvetica-Bold"
