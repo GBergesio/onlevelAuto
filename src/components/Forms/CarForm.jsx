@@ -1,10 +1,7 @@
-import { Button, Grid, TextField, Typography } from "@mui/material";
+import { Button, Grid, TextField } from "@mui/material";
 import firebaseApp from "../../../firebase";
 import { getFirestore, collection, addDoc, } from "firebase/firestore";
 import React, { useState } from "react";
-// import { uploadFile } from "firestoredos";
-// import { uploadArrayFiles } from "firestoredos";
-
 
 const db = getFirestore(firebaseApp);
 
@@ -41,20 +38,13 @@ export default function CarForm({ onClose, refreshData, setOpen, setMessage, set
   const [imgPrincipalNombre, setImgPrincipalNombre] = useState("");
   const [arrImgsNombres, setArrImgsNombres] = useState([]);
 
-  //original↓
-  // const handleImagenPrincipal = async (event) => {
-
-  //   const file = event.target.files[0]
-  //   const base64 = await convertBase64(file)
-
-  //   // setImgPrincipal(base64)
-  //   // setImgPrincipalNombre(file)
-  //   console.log("BASE 64 principal", base64)
-
-  // }
-
   const handleImagenPrincipal = async (event) => {
     const file = event.target.files[0]
+
+    if (!file) {
+      return;
+    }
+
     const image = new Image();
     image.src = URL.createObjectURL(file);
 
@@ -71,25 +61,11 @@ export default function CarForm({ onClose, refreshData, setOpen, setMessage, set
 
         setImgPrincipal(base64)
         setImgPrincipalNombre(file)
-        console.log("BASE 64 comprimida", base64)
+        // console.log("BASE 64 comprimida", base64)
         resolve();
       };
     });
-  }
-
-  let arrayB64 = []
-
-  // original↓
-  // const handleFileReadOriginal = async (event) => {
-
-  //   for (let file of event) {
-  //     const base64 = await convertBase64(file)
-  //     arrayB64.push(base64)
-  //   }
-  //   setArrImgsNombres(arrayB64)
-  //   // setArrImgsNombres(arrayB64)
-  //   console.log("array b64", arrayB64)
-  // }
+  };
 
   const handleFileRead = async (event) => {
     const arrayB64 = [];
@@ -116,26 +92,7 @@ export default function CarForm({ onClose, refreshData, setOpen, setMessage, set
     }
 
     setArrImgsNombres(arrayB64)
-    console.log("array b64", arrayB64)
   };
-
-
-  const convertBase64 = (file) => {
-
-    console.log("FILE", file)
-
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file)
-      fileReader.onload = () => {
-        resolve(fileReader.result);
-      }
-      fileReader.onerror = (error) => {
-        reject(error);
-      }
-    })
-  }
-
 
   const enviarInfo = async (e) => {
     e.preventDefault();
@@ -165,7 +122,7 @@ export default function CarForm({ onClose, refreshData, setOpen, setMessage, set
       setSeverity("success")
       setDato({ ...valorInicial });
       onClose()
-      console.log("arrImgsNombres adentro del send", arrImgsNombres)
+      // console.log("arrImgsNombres adentro del send", arrImgsNombres)
     } catch (error) {
       let errorImage = 'FirebaseError: The value of property "imagenPrincipal" is longer than 1048487 bytes.'
       setOpen(true);
@@ -377,12 +334,6 @@ export default function CarForm({ onClose, refreshData, setOpen, setMessage, set
             inputProps={{ accept: 'image/*' }}
             onChange={e => handleImagenPrincipal(e)}
           />
-          {/* <p>Imagen: {imgPrincipalNombre.name}</p> */}
-          {/* {imgPrincipalNombre ? `Nombre: ${imgPrincipalNombre.name}` : ""} */}
-          <Grid>
-            {/* {imgPrincipalNombre ? (<Typography sx={{ fontSize: 10 }}>Nombre: ${imgPrincipalNombre.name}</Typography>) : ""} */}
-            {imgPrincipalNombre.size > 1048487 ? (<Typography sx={{ color: "red", fontSize: 10 }}>El peso de la imagen debe ser menor a 1048487Kbs - El peso actual es: {imgPrincipalNombre.size} Kbs</Typography>) : ""}
-          </Grid>
           <label for="imagenes">Más imágenes</label>
           <input
             name='imagenes'
@@ -392,16 +343,6 @@ export default function CarForm({ onClose, refreshData, setOpen, setMessage, set
             inputProps={{ accept: 'image/*' }}
             onChange={e => handleFileRead(e.target.files)}
           />
-
-          {/* <label for="prueba">Prueba imagenes</label>
-          <input
-            name='prueba'
-            id='prueba'
-            type="file"
-            multiple
-            inputProps={{ accept: 'image/*' }}
-            onChange={e => handleFileReadOriginal(e.target.files)}
-          /> */}
         </Grid>
       </Grid>
       <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end" }}>

@@ -11,7 +11,7 @@ function Home() {
   const [createAgenteOpen, setCreateAgenteOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
-  const [severity, setSeverity] = useState("");
+  const [severity, setSeverity] = useState("info");
 
   const router = useRouter();
 
