@@ -184,7 +184,7 @@ export default function Pdf({ dataAuto, vendedor }) {
                   fontSize: "13px",
                 }}
               >
-                ${dataAuto.precio}
+                U$s{dataAuto.precio}
               </Text>
             </View>
           </View>
