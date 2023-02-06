@@ -233,28 +233,28 @@ export default function Pdf({ dataAuto, vendedor }) {
               style={{ display: "flex", flexDirection: "column", width: "27%" }}
             >
               <Text style={styles.textoCategorias}>
-                Marca:&nbsp;
+                Marca:&nbsp;&nbsp;
                 <Text style={{
                   fontWeight: "ultrabold",
                   fontFamily: "Helvetica-Bold"
                 }}>{dataAuto.marca}</Text>
               </Text>
               <Text style={styles.textoCategorias}>
-                Modelo:&nbsp;
+                Modelo:&nbsp;&nbsp;
                 <Text style={{
                   fontWeight: "ultrabold",
                   fontFamily: "Helvetica-Bold"
                 }}>{dataAuto.modelo}</Text>
               </Text>
               <Text style={styles.textoCategorias}>
-                Año:&nbsp;
+                Año:&nbsp;&nbsp;
                 <Text style={{
                   fontWeight: "ultrabold",
                   fontFamily: "Helvetica-Bold"
                 }}>{dataAuto.año}</Text>
               </Text>
               <Text style={styles.textoCategorias}>
-                Versión:&nbsp;
+                Versión:&nbsp;&nbsp;
                 <Text style={{
                   fontWeight: "ultrabold",
                   fontFamily: "Helvetica-Bold"
@@ -265,28 +265,28 @@ export default function Pdf({ dataAuto, vendedor }) {
               style={{ display: "flex", flexDirection: "column", width: "28%" }}
             >
               <Text style={styles.textoCategorias}>
-                Kilometraje:&nbsp;
+                Kilometraje:&nbsp;&nbsp;
                 <Text style={{
                   fontWeight: "ultrabold",
                   fontFamily: "Helvetica-Bold"
                 }}>{dataAuto.kilometraje}</Text>
               </Text>
               <Text style={styles.textoCategorias}>
-                Transmisión:&nbsp;
+                Transmisión:&nbsp;&nbsp;
                 <Text style={{
                   fontWeight: "ultrabold",
                   fontFamily: "Helvetica-Bold"
                 }}>{dataAuto.transmision}</Text>
               </Text>
               <Text style={styles.textoCategorias}>
-                Puertas:&nbsp;
+                Puertas:&nbsp;&nbsp;
                 <Text style={{
                   fontWeight: "ultrabold",
                   fontFamily: "Helvetica-Bold"
                 }}>{dataAuto.puertas}</Text>
               </Text>
               <Text style={styles.textoCategorias}>
-                Motor:&nbsp;
+                Motor:&nbsp;&nbsp;
                 <Text style={{
                   fontWeight: "ultrabold",
                   fontFamily: "Helvetica-Bold"
@@ -302,28 +302,28 @@ export default function Pdf({ dataAuto, vendedor }) {
               }}
             >
               <Text style={styles.textoCategorias}>
-                Tipo de combustible:&nbsp;
+                Tipo de combustible:&nbsp;&nbsp;
                 <Text style={{
                   fontWeight: "ultrabold",
                   fontFamily: "Helvetica-Bold"
                 }}>{dataAuto.tipoCombustible}</Text>
               </Text>
               <Text style={styles.textoCategorias}>
-                Acepta permuta:&nbsp;
+                Acepta permuta:&nbsp;&nbsp;
                 <Text style={{
                   fontWeight: "ultrabold",
                   fontFamily: "Helvetica-Bold"
                 }}>{dataAuto.permuta}</Text>
               </Text>
               <Text style={styles.textoCategorias}>
-                HP:&nbsp;
+                HP:&nbsp;&nbsp;
                 <Text style={{
                   fontWeight: "ultrabold",
                   fontFamily: "Helvetica-Bold"
                 }}>{dataAuto.HP}</Text>
               </Text>
               <Text style={styles.textoCategorias}>
-                Ubicación:&nbsp;
+                Ubicación:&nbsp;&nbsp;
                 <Text style={{
                   fontWeight: "ultrabold",
                   fontFamily: "Helvetica-Bold"
