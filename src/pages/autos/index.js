@@ -13,7 +13,7 @@ import PdfView from "@/components/PDFView/PdfView";
 
 const db = getFirestore(firebaseApp);
 
-export default function index({ autos, agentes }) {
+export default function index() {
   const { columns } = Columns();
 
   // eslint-disable-next-line react-hooks/rules-of-hooks

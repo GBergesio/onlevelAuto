@@ -19,16 +19,17 @@ export default function Pdf({ dataAuto, vendedor }) {
       display: "flex",
       flexDirection: "column",
       backgroundColor: "#333333",
-      height: "80px",
+      height: "10vh",
       width: "100%",
-      marginTop: "25px",
-      marginBottom: "25px",
+      marginTop: "10px",
+      marginBottom: "10px",
     },
     firstInfo: {
       display: "flex",
       flexDirection: "column",
       justifyContent: "space-around",
       width: "100%",
+      height: "10vh"
     },
     imageHeader: {
       display: "flex",
@@ -47,8 +48,9 @@ export default function Pdf({ dataAuto, vendedor }) {
       display: "flex",
       flexDirection: "column",
       alignSelf: "center",
-      marginTop: "20px",
-      marginLeft: "25px",
+      marginTop: "10px",
+      width: "100%",
+      height: "40vh",
     },
     imageSecSection: {
       display: "flex",
@@ -60,7 +62,7 @@ export default function Pdf({ dataAuto, vendedor }) {
     titulo: {
       fontSize: "26px",
       fontWeight: "bold",
-      paddingBottom: "10px",
+      paddingBottom: "5px",
       paddingLeft: "25px",
     },
     subtitulo: {
@@ -72,6 +74,7 @@ export default function Pdf({ dataAuto, vendedor }) {
       flexDirection: "column",
       marginTop: "20px",
       marginLeft: "25px",
+      height: "30vh"
     },
     textoCategorias: {
       fontSize: "12px",
@@ -146,7 +149,6 @@ export default function Pdf({ dataAuto, vendedor }) {
           </View>
           <View
             style={{
-              marginTop: "10px",
               marginLeft: "25px",
               display: "flex",
               flexDirection: "row",
@@ -189,7 +191,7 @@ export default function Pdf({ dataAuto, vendedor }) {
         </View>
         <View style={styles.imageSection}>
           <Image
-            style={{ width: "350px" }}
+            style={{ marginLeft: "25px", marginRight: "25px" }}
             alt="imgPrincipal"
             src={dataAuto.imagenPrincipal}
           />
@@ -326,7 +328,7 @@ export default function Pdf({ dataAuto, vendedor }) {
 
             {dataAuto.imagenes !== [] ? (<>{dataAuto.imagenes.map((img, index) => (
               <Image
-                style={{ paddingBottom: "5px", width: "50%", padding: "5px" }}
+                style={{ paddingBottom: "5px", width: "50%", height: "22vh", padding: "5px" }}
                 alt="imagenesAuto"
                 key={index}
                 src={img}

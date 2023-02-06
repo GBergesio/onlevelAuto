@@ -5,6 +5,7 @@ import React, { useState } from "react";
 // import { uploadFile } from "firestoredos";
 // import { uploadArrayFiles } from "firestoredos";
 
+
 const db = getFirestore(firebaseApp);
 
 export default function CarForm({ onClose, refreshData, setOpen, setMessage, setSeverity }) {
@@ -40,33 +41,89 @@ export default function CarForm({ onClose, refreshData, setOpen, setMessage, set
   const [imgPrincipalNombre, setImgPrincipalNombre] = useState("");
   const [arrImgsNombres, setArrImgsNombres] = useState([]);
 
+  //original↓
+  // const handleImagenPrincipal = async (event) => {
+
+  //   const file = event.target.files[0]
+  //   const base64 = await convertBase64(file)
+
+  //   // setImgPrincipal(base64)
+  //   // setImgPrincipalNombre(file)
+  //   console.log("BASE 64 principal", base64)
+
+  // }
+
   const handleImagenPrincipal = async (event) => {
-
     const file = event.target.files[0]
-    const base64 = await convertBase64(file)
+    const image = new Image();
+    image.src = URL.createObjectURL(file);
 
-    setImgPrincipal(base64)
-    setImgPrincipalNombre(file)
+    await new Promise((resolve) => {
+      image.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = 800;
+        canvas.height = (image.naturalHeight / image.naturalWidth) * 800;
 
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+        const base64 = canvas.toDataURL('image/jpeg');
+
+        setImgPrincipal(base64)
+        setImgPrincipalNombre(file)
+        console.log("BASE 64 comprimida", base64)
+        resolve();
+      };
+    });
   }
 
   let arrayB64 = []
 
+  // original↓
+  // const handleFileReadOriginal = async (event) => {
+
+  //   for (let file of event) {
+  //     const base64 = await convertBase64(file)
+  //     arrayB64.push(base64)
+  //   }
+  //   setArrImgsNombres(arrayB64)
+  //   // setArrImgsNombres(arrayB64)
+  //   console.log("array b64", arrayB64)
+  // }
+
   const handleFileRead = async (event) => {
+    const arrayB64 = [];
 
     for (let file of event) {
-      const base64 = await convertBase64(file)
-      arrayB64.push(base64)
+      const image = new Image();
+      image.src = URL.createObjectURL(file);
+
+      await new Promise((resolve) => {
+        image.onload = () => {
+          const canvas = document.createElement('canvas');
+          canvas.width = 800;
+          canvas.height = (image.naturalHeight / image.naturalWidth) * 800;
+
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+          const base64 = canvas.toDataURL('image/jpeg');
+          arrayB64.push(base64)
+
+          resolve();
+        };
+      });
     }
+
     setArrImgsNombres(arrayB64)
-    // setArrImgsNombres(arrayB64)
     console.log("array b64", arrayB64)
-  }
-  console.log("array arrImgsNombres afu", arrImgsNombres)
-  // console.log("array imgs arrayImagenesNombres", arrImgsNombres)
+  };
 
 
   const convertBase64 = (file) => {
+
+    console.log("FILE", file)
+
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
       fileReader.readAsDataURL(file)
@@ -335,6 +392,16 @@ export default function CarForm({ onClose, refreshData, setOpen, setMessage, set
             inputProps={{ accept: 'image/*' }}
             onChange={e => handleFileRead(e.target.files)}
           />
+
+          {/* <label for="prueba">Prueba imagenes</label>
+          <input
+            name='prueba'
+            id='prueba'
+            type="file"
+            multiple
+            inputProps={{ accept: 'image/*' }}
+            onChange={e => handleFileReadOriginal(e.target.files)}
+          /> */}
         </Grid>
       </Grid>
       <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end" }}>
