@@ -190,7 +190,7 @@ export default function Pdf({ dataAuto, vendedor }) {
                   fontFamily: "Helvetica-Bold"
                 }}
               >
-                U$S{dataAuto.precio}
+                US${dataAuto.precio}
               </Text>
             </View>
           </View>
