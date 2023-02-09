@@ -332,7 +332,7 @@ export default function Pdf({ dataAuto, vendedor }) {
               </Text>
             </View>
           </View>
-          <View style={{ height: "200px", width: "100%" }}>
+          <View style={{ height: "200px", width: "95%", paddingRight: "25px", overflow: "hidden", minHeight: "150px" }}>
             <Text
               style={{
                 fontSize: "15px",
@@ -349,14 +349,17 @@ export default function Pdf({ dataAuto, vendedor }) {
                 flexDirection: "column",
                 justifyContent: "center",
                 marginBottom: "10px",
-                width: "95%",
+                paddingRight: "45px",
                 borderBottom: "1px solid #000000",
+                width: "95%"
               }}
             ></View>
-            <Text style={styles.textoCategorias}><Text style={{
-              fontWeight: "ultrabold",
-              fontFamily: "Helvetica-Bold"
-            }}>{dataAuto.adicionales}</Text></Text>
+            <View style={{ width: "90%", display: "flex", flexWrap: "wrap" }}>
+              <Text style={styles.textoCategorias}><Text style={{
+                fontWeight: "ultrabold",
+                fontFamily: "Helvetica-Bold", marginTop: "10px"
+              }}>{dataAuto.adicionales}</Text></Text>
+            </View>
           </View>
         </View>
       </Page>
@@ -386,7 +389,6 @@ export default function Pdf({ dataAuto, vendedor }) {
           <View
             style={{ display: "flex", flexDirection: "row", padding: "5px", width: "100%", flexWrap: "wrap", gap: "10px", marginRight: "25px" }}
           >
-
             {dataAuto.imagenes !== [] ? (<>{dataAuto.imagenes.map((img, index) => (
               <Image
                 style={{ paddingBottom: "5px", width: "50%", height: "22vh", padding: "5px" }}

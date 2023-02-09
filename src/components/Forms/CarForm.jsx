@@ -92,6 +92,7 @@ export default function CarForm({ onClose, refreshData, setOpen, setMessage, set
     }
 
     setArrImgsNombres(arrayB64)
+    console.log("arr imagenes", arrayB64)
   };
 
   const enviarInfo = async (e) => {
@@ -309,7 +310,9 @@ export default function CarForm({ onClose, refreshData, setOpen, setMessage, set
             placeholder="Adicionales"
             value={dato.adicionales}
             onChange={obtenerInputs}
-
+            multiline
+            rows={6}
+            maxRows={6}
             sx={{ paddingBottom: "8px" }}
           />
           <TextField
